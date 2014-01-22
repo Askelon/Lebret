@@ -15,9 +15,9 @@
  *
  * @return void
  */
-function deguiche_setup() {
+function lebret_setup() {
 
-	load_theme_textdomain( 'deguiche', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'lebret', get_template_directory() . '/languages' );
 
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
@@ -27,12 +27,12 @@ function deguiche_setup() {
 		'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video'
 	) );
 
-	register_nav_menu( 'primary', __( 'Navigation Menu', 'deguiche' ) );
-	register_nav_menu( 'secondary', __( 'Secondary Menu', 'deguiche' ) );
+	register_nav_menu( 'primary', __( 'Navigation Menu', 'lebret' ) );
+	register_nav_menu( 'secondary', __( 'Secondary Menu', 'lebret' ) );
 
 	if ( ! isset( $content_width ) ) $content_width = 896;
 }
-add_action( 'after_setup_theme', 'deguiche_setup' );
+add_action( 'after_setup_theme', 'lebret_setup' );
 
 
 /**
@@ -40,11 +40,11 @@ add_action( 'after_setup_theme', 'deguiche_setup' );
  *
  * @since    1.0
  */
-function deguiche_custom_header_fonts() {
+function lebret_custom_header_fonts() {
 
-	wp_enqueue_style( 'deguiche-fonts', '//fonts.googleapis.com/css?family=Open+Sans:300,700', array(), null );
+	wp_enqueue_style( 'lebret-fonts', '//fonts.googleapis.com/css?family=Open+Sans:300,700', array(), null );
 }
-add_action( 'admin_print_styles-appearance_page_custom-header', 'deguiche_custom_header_fonts' );
+add_action( 'admin_print_styles-appearance_page_custom-header', 'lebret_custom_header_fonts' );
 
 
 /**
@@ -54,36 +54,36 @@ add_action( 'admin_print_styles-appearance_page_custom-header', 'deguiche_custom
  *
  * @return void
  */
-function deguiche_widgets_init() {
+function lebret_widgets_init() {
 	register_sidebar( array(
-		'name'          => __( 'Home Widget Area', 'deguiche' ),
+		'name'          => __( 'Home Widget Area', 'lebret' ),
 		'id'            => 'sidebar-home',
-		'description'   => __( 'Appears only on Homepage.', 'deguiche' ),
+		'description'   => __( 'Appears only on Homepage.', 'lebret' ),
 		'before_widget' => '<article id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</article>',
 		'before_title'  => '<h4 class="">',
 		'after_title'   => '</h4>',
 	) );
 	register_sidebar( array(
-		'name'          => __( 'Blog Right First Widget Area', 'deguiche' ),
+		'name'          => __( 'Blog Right First Widget Area', 'lebret' ),
 		'id'            => 'sidebar-first',
-		'description'   => __( 'Appears in the right section of the Blog Posts View.', 'deguiche' ),
+		'description'   => __( 'Appears in the right section of the Blog Posts View.', 'lebret' ),
 		'before_widget' => '<article id="%1$s" class="ui stacked segment widget %2$s">',
 		'after_widget'  => '</article>',
 		'before_title'  => '<h4 class="ui block header widget-title">',
 		'after_title'   => '</h4>',
 	) );
 	register_sidebar( array(
-		'name'          => __( 'Blog Right Second Widget Area', 'deguiche' ),
+		'name'          => __( 'Blog Right Second Widget Area', 'lebret' ),
 		'id'            => 'sidebar-second',
-		'description'   => __( 'Appears in the right section of the Blog Posts View.', 'deguiche' ),
+		'description'   => __( 'Appears in the right section of the Blog Posts View.', 'lebret' ),
 		'before_widget' => '<article id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</article>',
 		'before_title'  => '<h3 class="widget-title">',
 		'after_title'   => '</h3>',
 	) );
 }
-add_action( 'widgets_init', 'deguiche_widgets_init' );
+add_action( 'widgets_init', 'lebret_widgets_init' );
 
 
 /**
@@ -91,23 +91,24 @@ add_action( 'widgets_init', 'deguiche_widgets_init' );
  *
  * @since    1.0
  */
-function deguiche_scripts() {
+function lebret_scripts() {
 
-	wp_register_style( 'deguiche', get_stylesheet_uri(), array(), false, 'all' );
+	wp_register_style( 'lebret', get_stylesheet_uri(), array(), false, 'all' );
 	wp_register_style( 'open-sans', "//fonts.googleapis.com/css?family=Open+Sans:100,300,700", array(), false, 'all' );
 	wp_register_style( 'lato', '//fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic', array(), false, 'all' );
 
-	wp_register_script( 'deguiche', get_template_directory_uri() . '/assets/js/public.js', array( 'jquery' ), false, true );
+	wp_register_script( 'lebret', get_template_directory_uri() . '/assets/js/public.js', array( 'jquery' ), false, true );
 
 	wp_enqueue_style( 'open-sans' );
 	wp_enqueue_style( 'lato' );
-	wp_enqueue_style( 'deguiche' );
+	wp_enqueue_style( 'lebret' );
 
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'deguiche' );
+	wp_enqueue_script( 'masonry' );
+	wp_enqueue_script( 'lebret' );
 	wp_enqueue_script( 'comment-reply' );
 }
-add_action( 'wp_enqueue_scripts', 'deguiche_scripts' );
+add_action( 'wp_enqueue_scripts', 'lebret_scripts' );
 
 
 /**
@@ -118,8 +119,8 @@ add_action( 'wp_enqueue_scripts', 'deguiche_scripts' );
 *
 * @return   string        The site logo URL.
 */
-function deguiche_site_logo() {
-	$site_logo = get_theme_mod( 'deguiche_logo', get_template_directory_uri() . '/assets/img/logo_128.png' );
+function lebret_site_logo() {
+	$site_logo = get_theme_mod( 'lebret_logo', get_template_directory_uri() . '/assets/img/logo_128.png' );
 	return $site_logo;
 }
 
@@ -129,12 +130,13 @@ function deguiche_site_logo() {
  *
  * @since    1.0
  */
-function deguiche_menu( $menu_name = 'primary', $args = array() ) {
+function lebret_menu( $menu_name = 'primary', $args = array() ) {
 
 	if ( ! in_array( $menu_name, array( 'primary', 'secondary' ) ) )
 		return false;
 
 	$defaults = array(
+		'id'              => 'nav-' . $menu_name . '-menu',
 		'container_class' => 'ui secondary vertical pointing menu',
 		'item_class'      => 'item'
 	);
@@ -152,7 +154,7 @@ function deguiche_menu( $menu_name = 'primary', $args = array() ) {
 
 		if ( $items ) {
 ?>
-						<nav class="<?php echo $container_class ?>">
+						<nav id="<?php echo $id ?>" class="<?php echo $container_class ?>">
 <?php
 			foreach ( $items as $item ) {
 
@@ -188,7 +190,7 @@ function deguiche_menu( $menu_name = 'primary', $args = array() ) {
 /**
  * Prints HTML with date information for current post.
  *
- * Create your own deguiche_entry_date() to override in a child theme.
+ * Create your own lebret_entry_date() to override in a child theme.
  *
  * @since    1.0
  *
@@ -196,16 +198,16 @@ function deguiche_menu( $menu_name = 'primary', $args = array() ) {
  *
  * @return string The HTML-formatted post date.
  */
-function deguiche_entry_date( $echo = true ) {
+function lebret_entry_date( $echo = true ) {
 
 	if ( has_post_format( array( 'chat', 'status' ) ) )
-		$format_prefix = _x( '%1$s on %2$s', '1: post format name. 2: date', 'deguiche' );
+		$format_prefix = _x( '%1$s on %2$s', '1: post format name. 2: date', 'lebret' );
 	else
 		$format_prefix = '%2$s';
 
 	$date = sprintf( '<span class="date"><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s">%4$s</time></a></span>',
 		esc_url( get_permalink() ),
-		esc_attr( sprintf( __( 'Permalink to %s', 'deguiche' ), the_title_attribute( 'echo=0' ) ) ),
+		esc_attr( sprintf( __( 'Permalink to %s', 'lebret' ), the_title_attribute( 'echo=0' ) ) ),
 		esc_attr( get_the_date( 'c' ) ),
 		sprintf( '<span class="day">%s</span> <span class="monthyear"><span class="month">%s</span> <span class="year">%s</span></span>', get_the_date('j'), get_the_date('M'), get_the_date('Y') )
 	);
@@ -222,7 +224,7 @@ function deguiche_entry_date( $echo = true ) {
  *
  * @since    1.0
  */
-function deguiche_entry_meta() {
+function lebret_entry_meta() {
 
 	$author = $tags = $categories = $more = '';
 
@@ -230,35 +232,35 @@ function deguiche_entry_meta() {
 	if ( 'post' == get_post_type() ) {
 		$author = sprintf( '<li class="post-author"><span class="author vcard"><span class="entypo">&#128100;</span> &nbsp;<a class="url fn n" href="%1$s" title="%2$s" rel="author">%3$s</a></span></li>',
 			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-			esc_attr( sprintf( __( 'View all posts by %s', 'deguiche' ), get_the_author() ) ),
+			esc_attr( sprintf( __( 'View all posts by %s', 'lebret' ), get_the_author() ) ),
 			get_the_author()
 		);
 	}
 
-	$categories = get_the_category_list( __( ', ', 'deguiche' ) );
+	$categories = get_the_category_list( __( ', ', 'lebret' ) );
 	if ( $categories ) {
-		$c = explode( __( ', ', 'deguiche' ), $categories );
+		$c = explode( __( ', ', 'lebret' ), $categories );
 		if ( count( $c ) > 3 )
-			$categories = implode( __( ', ', 'deguiche' ), array_slice( $c, 0, 3 ) ) . '&hellip; (' . ( count( $c ) - 3 ) . ' more)';
+			$categories = implode( __( ', ', 'lebret' ), array_slice( $c, 0, 3 ) ) . '&hellip; (' . ( count( $c ) - 3 ) . ' more)';
 
 		$categories = sprintf( '<li class="post-categories"><span class="entypo">&#128193;</span> &nbsp;%s</li>', $categories );
 	}
 
-	$tags = get_the_tag_list( '', __( ', ', 'deguiche' ) );
+	$tags = get_the_tag_list( '', __( ', ', 'lebret' ) );
 	if ( $tags ) {
-		$t = explode( __( ', ', 'deguiche' ), $tags );
+		$t = explode( __( ', ', 'lebret' ), $tags );
 		if ( count( $t ) > 3 )
-			$tags = implode( __( ', ', 'deguiche' ), array_slice( $t, 0, 3 ) ) . '&hellip; (' . ( count( $t ) - 3 ) . ' more)';
+			$tags = implode( __( ', ', 'lebret' ), array_slice( $t, 0, 3 ) ) . '&hellip; (' . ( count( $t ) - 3 ) . ' more)';
 
 		$tags = sprintf( '<li class="post-tags"><span class="entypo">&#59148;</span> &nbsp;%s</li>', $tags );
 	}
 
 	if ( ! is_single() )
-		$more = sprintf( '<li class="post-more more"><a href="%s" class="more">%s</a></li>', get_permalink(), __( 'Read More', 'deguiche' ) );
+		$more = sprintf( '<li class="post-more more"><a href="%s" class="more">%s</a></li>', get_permalink(), __( 'Read More', 'lebret' ) );
 	else if ( is_single() && comments_open() )
-		$more = '<li class="post-more more-comment"><a href="' . get_comments_link() . '">' . __( 'Leave a comment', 'deguiche' ) . '</a></li>';
+		$more = '<li class="post-more more-comment"><a href="' . get_comments_link() . '">' . __( 'Leave a comment', 'lebret' ) . '</a></li>';
 	else
-		$more = '<li class="post-more void"><a>' . __( 'Comments closed.', 'deguiche' ) . '</a></li>';
+		$more = '<li class="post-more void"><a>' . __( 'Comments closed.', 'lebret' ) . '</a></li>';
 ?>
 						<ul>
 							<?php echo $author ?>
@@ -275,7 +277,7 @@ function deguiche_entry_meta() {
  *
  * @since    1.0
  */
-function deguiche_paging_nav() {
+function lebret_paging_nav() {
 
 	global $wp_query;
 
@@ -290,11 +292,11 @@ function deguiche_paging_nav() {
 				<div class="pagination">
 					<nav class="paging-navigation" role="pagination">
 <?php if ( get_previous_posts_link() ) : ?>
-						<div class="recent-posts"><?php previous_posts_link( __( '<span class="meta-nav">&larr;</span> Newer posts', 'deguiche' ) ); ?></div>
+						<div class="recent-posts"><?php previous_posts_link( __( '<span class="meta-nav">&larr;</span> Newer posts', 'lebret' ) ); ?></div>
 <?php
 endif;
 if ( get_next_posts_link() ) : ?>
-						<div class="older-posts"><?php next_posts_link( __( 'Older posts <span class="meta-nav">&rarr;</span>', 'deguiche' ) ); ?></div>
+						<div class="older-posts"><?php next_posts_link( __( 'Older posts <span class="meta-nav">&rarr;</span>', 'lebret' ) ); ?></div>
 <?php endif; ?>
 						<div class="page-number">
 							<ul id="paginate-links">
@@ -302,7 +304,7 @@ if ( get_next_posts_link() ) : ?>
 for ( $i = 1; $i <= $total; $i++ ) : 
 	$selected = ( $i == $page );
 ?>
-								<?php printf( '<li class="paginate-link%s" id="page_%d"><a href="%s">%s</a></li>', ( $selected ? ' selected' : '' ), $i, ( $selected ? '#' : get_pagenum_link( $i ) ), sprintf( __( 'Page %d of %d', 'deguiche' ), $i, $total ) ) ?>
+								<?php printf( '<li class="paginate-link%s" id="page_%d"><a href="%s">%s</a></li>', ( $selected ? ' selected' : '' ), $i, ( $selected ? '#' : get_pagenum_link( $i ) ), sprintf( __( 'Page %d of %d', 'lebret' ), $i, $total ) ) ?>
 
 <?php endfor; ?>
 							</ul>
@@ -320,7 +322,7 @@ for ( $i = 1; $i <= $total; $i++ ) :
 *
 * @return void
 */
-function deguiche_post_nav() {
+function lebret_post_nav() {
 
 	global $post;
 
@@ -333,8 +335,8 @@ function deguiche_post_nav() {
 ?>
 				<div class="pagination">
 					<nav class="post-navigation" role="navigation">
-						<div class="recent-posts"><?php previous_post_link( '%link', _x( '<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'deguiche' ) ); ?></div>
-						<div class="older-posts"><?php next_post_link( '%link', _x( '%title <span class="meta-nav">&rarr;</span>', 'Next post link', 'deguiche' ) ); ?></div>
+						<div class="recent-posts"><?php previous_post_link( '%link', _x( '<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'lebret' ) ); ?></div>
+						<div class="older-posts"><?php next_post_link( '%link', _x( '%title <span class="meta-nav">&rarr;</span>', 'Next post link', 'lebret' ) ); ?></div>
 					</nav>
 					<div style="clear:both"></div>
 				</div>
@@ -350,7 +352,7 @@ function deguiche_post_nav() {
  *
  * @since    1.0
  */
-function deguiche_post_cover( $post_id = null, $echo = true ) {
+function lebret_post_cover( $post_id = null, $echo = true ) {
 
 	$html = '';
 
@@ -400,7 +402,7 @@ function deguiche_post_cover( $post_id = null, $echo = true ) {
  *
  * @since    1.0
  */
-function deguiche_comments( $comment, $args, $depth ) {
+function lebret_comments( $comment, $args, $depth ) {
 
 	extract( $args, EXTR_SKIP );
 
@@ -413,13 +415,13 @@ function deguiche_comments( $comment, $args, $depth ) {
 						<header class="comment-header">
 							<div class="comment-author vcard">
 								<?php echo get_avatar( $comment->comment_author_email, 74 ); ?>
-								<?php printf( '<div class="vcar-content"><cite class="fn">%s</cite></div>', get_comment_author_link(), __( 'says', 'deguiche' ) ); ?>
+								<?php printf( '<div class="vcar-content"><cite class="fn">%s</cite></div>', get_comment_author_link(), __( 'says', 'lebret' ) ); ?>
 							</div>
 						</header>
 
 						<div class="comment-text">
 <?php if ( '0' == $comment->comment_approved ) : ?>
-							<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'deguiche' ) ?></em><br />
+							<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'lebret' ) ?></em><br />
 <?php endif; ?>
 
 							<?php comment_text(); ?>
@@ -427,15 +429,15 @@ function deguiche_comments( $comment, $args, $depth ) {
 
 						<footer class="comment-meta">
 							<ul>
-								<li class="comment-date"><span class="entypo">&#128340;</span> &nbsp;<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s at %2$s', 'deguiche' ), get_comment_date(),  get_comment_time() ); ?></a></li>
-								<?php edit_comment_link( __( 'Edit', 'deguiche' ), '<li class="comment-edit"><span class="entypo">&#9998;</span> &nbsp;', '</li>' ); ?>
+								<li class="comment-date"><span class="entypo">&#128340;</span> &nbsp;<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s at %2$s', 'lebret' ), get_comment_date(),  get_comment_time() ); ?></a></li>
+								<?php edit_comment_link( __( 'Edit', 'lebret' ), '<li class="comment-edit"><span class="entypo">&#9998;</span> &nbsp;', '</li>' ); ?>
 								<?php
 									comment_reply_link(
 										array_merge(
 											$args,
 											array(
 												'before'     => '<li class="comment-reply">',
-												'reply_text' => '<span class="entypo">&#59154;</span> &nbsp;' . __( 'Reply', 'deguiche' ),
+												'reply_text' => '<span class="entypo">&#59154;</span> &nbsp;' . __( 'Reply', 'lebret' ),
 												'after'      => '</li>',
 												'depth'      => $depth,
 												'max_depth'  => $args['max_depth']
@@ -461,13 +463,13 @@ function deguiche_comments( $comment, $args, $depth ) {
  *
  * @since    1.0
  */
-function deguiche_comment_logged_in( $logged_in_as ) {
+function lebret_comment_logged_in( $logged_in_as ) {
 ?>
 				<header class="comment-respond-header comment-respond-loggedin">
 <?php
 	return $logged_in_as;
 }
-add_filter( 'comment_form_logged_in', 'deguiche_comment_logged_in' );
+add_filter( 'comment_form_logged_in', 'lebret_comment_logged_in' );
 
 
 /**
@@ -479,13 +481,13 @@ add_filter( 'comment_form_logged_in', 'deguiche_comment_logged_in' );
  *
  * @since    1.0
  */
-function deguiche_comment_form_logged_in_after( $commenter ) {
+function lebret_comment_form_logged_in_after( $commenter ) {
 ?>
 				</header>
 
 <?php
 }
-add_action( 'comment_form_logged_in_after', 'deguiche_comment_form_logged_in_after' );
+add_action( 'comment_form_logged_in_after', 'lebret_comment_form_logged_in_after' );
 
 
 /**
@@ -495,12 +497,12 @@ add_action( 'comment_form_logged_in_after', 'deguiche_comment_form_logged_in_aft
  *
  * @since    1.0
  */
-function deguiche_comment_before_fields() {
+function lebret_comment_before_fields() {
 ?>
 				<header class="comment-respond-header comment-respond-fields">
 <?php
 }
-add_action( 'comment_form_before_fields', 'deguiche_comment_before_fields' );
+add_action( 'comment_form_before_fields', 'lebret_comment_before_fields' );
 
 
 /**
@@ -510,13 +512,13 @@ add_action( 'comment_form_before_fields', 'deguiche_comment_before_fields' );
  *
  * @since    1.0
  */
-function deguiche_comment_form_after_fields() {
+function lebret_comment_form_after_fields() {
 ?>
 				</header>
 				<div class="comment-respond-avatar"><?php echo get_avatar( null, 74 ); ?></div>
 <?php
 }
-add_action( 'comment_form_after_fields', 'deguiche_comment_form_after_fields' );
+add_action( 'comment_form_after_fields', 'lebret_comment_form_after_fields' );
 
 
 /**
@@ -526,12 +528,12 @@ add_action( 'comment_form_after_fields', 'deguiche_comment_form_after_fields' );
  *
  * @since    1.0
  */
-function deguiche_comment_form( $post_id ) {
+function lebret_comment_form( $post_id ) {
 ?>
 				</div> <!-- /comment-respond-content -->
 <?php
 }
-add_action( 'comment_form', 'deguiche_comment_form' );
+add_action( 'comment_form', 'lebret_comment_form' );
 
 
 
@@ -542,19 +544,19 @@ add_action( 'comment_form', 'deguiche_comment_form' );
  *
  * @since    1.0
  */
-function deguiche_theme_customizer( $wp_customize ) {
+function lebret_theme_customizer( $wp_customize ) {
 
 	$wp_customize->add_section(
-		'deguiche_logo_section',
+		'lebret_logo_section',
 		array(
-			'title'       => __( 'Site Logo', 'deguiche' ),
+			'title'       => __( 'Site Logo', 'lebret' ),
 			'priority'    => 50,
 			'description' => '',
 		)
 	);
 
 	$wp_customize->add_setting(
-		'deguiche_logo',
+		'lebret_logo',
 		array(
 			'default'   => get_template_directory_uri() . '/assets/img/logo_128.png',
 			'transport' => 'postMessage',
@@ -564,21 +566,21 @@ function deguiche_theme_customizer( $wp_customize ) {
 	$wp_customize->add_control(
 		new WP_Customize_Image_Control(
 			$wp_customize,
-			'deguiche_logo',
+			'lebret_logo',
 			array(
-				'label'      => __( 'Custom Logo', 'deguiche' ),
-				'section'    => 'deguiche_logo_section',
-				'settings'   => 'deguiche_logo',
+				'label'      => __( 'Custom Logo', 'lebret' ),
+				'section'    => 'lebret_logo_section',
+				'settings'   => 'lebret_logo',
 			)
 		)
 	);
 
-	$wp_customize->get_setting('deguiche_logo')->transport='postMessage';
+	$wp_customize->get_setting('lebret_logo')->transport='postMessage';
 
 	// Enqueue scripts for real-time preview
-	wp_enqueue_script( 'deguiche-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array( 'jquery' ) );
+	wp_enqueue_script( 'lebret-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array( 'jquery' ) );
 }
-add_action( 'customize_register', 'deguiche_theme_customizer' );
+add_action( 'customize_register', 'lebret_theme_customizer' );
 
 
 
@@ -592,8 +594,8 @@ add_action( 'customize_register', 'deguiche_theme_customizer' );
 class DeGuiche_Widget_Categories extends WP_Widget {
 
         function __construct() {
-                $widget_ops = array( 'classname' => 'deguiche_widget_categories', 'description' => __( "A list or dropdown of categories. This is a copy of the Categories Widget, DeGuiche styled." ) );
-                parent::__construct('deguiche_categories', __('DeGuiche Categories'), $widget_ops);
+                $widget_ops = array( 'classname' => 'lebret_widget_categories', 'description' => __( "A list or dropdown of categories. This is a copy of the Categories Widget, DeGuiche styled." ) );
+                parent::__construct('lebret_categories', __('DeGuiche Categories'), $widget_ops);
         }
 
         function widget( $args, $instance ) {
@@ -706,7 +708,7 @@ class DeGuiche_Widget_Categories extends WP_Widget {
 
         function __construct() {
                 $widget_ops = array( 'description' => __('Add a custom menu to your sidebar.') );
-                parent::__construct( 'deguiche_nav_menu', __('DeGuiche Custom Menu'), $widget_ops );
+                parent::__construct( 'lebret_nav_menu', __('DeGuiche Custom Menu'), $widget_ops );
         }
 
         function widget($args, $instance) {
@@ -784,9 +786,9 @@ class DeGuiche_Widget_Categories extends WP_Widget {
 }
 
 
-function deguiche_widgets() {
+function lebret_widgets() {
 
 	register_widget( 'DeGuiche_Widget_Categories' );
 	register_widget( 'DeGuiche_Nav_Menu_Widget' );
 }
-add_action( 'widgets_init', 'deguiche_widgets' );
+add_action( 'widgets_init', 'lebret_widgets' );

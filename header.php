@@ -32,39 +32,20 @@
 			</div>
 
 			<div id="nav-primary-menu" class="ui inverted menu grid">
-				<a class="ui one wide column active item item-home"><i class="home icon"></i> Home</a>
-				<a class="ui one wide column item item-corp"><i class="mail icon"></i> Corp.</a>
-				<a class="ui one wide column item item-me"><i class="user icon"></i> .ME</a>
-				<div class="right menu">
-					
-				</div>
+				<a href="http://blog.caercam.org/" class="ui one wide column active item item-home"><i class="home icon"></i> <span>Home</span></a>
+				<a href="http://www.caercam.org/" class="ui one wide column item item-corp"><i class="mail icon"></i> <span>Corp.</span></a>
+				<a href="http://charliemerland.me/" class="ui one wide column item item-me"><i class="user icon"></i> <span>.ME</span></a>
+				<a href="#" id="toggle-search" class="right ui one wide column item item-toggle-search"><i class="search big icon"></i></a>
 			</div>
 
 			<div id="nav-secondary-menu" class="ui inverted secondary menu divided grid">
-				<div class="left three wide column">
-					
+				<div class="left three wide column site-information">
+					<h1 class="site-title"><a href="<?php echo home_url('/') ?>"><?php bloginfo('name') ?></a></h1>
 				</div>
 				<div class="ui inverted right large menu">
-					<div class="ui top right pointing mobile dropdown link item">
-						Menu
-						<i class="dropdown icon"></i>
-						<div class="menu">
-							<a class="item">Classes</a>
-							<a class="item">Cocktail Hours</a>
-							<a class="item">Community</a>
-						</div>
-					</div>
-					<div class="ui dropdown link item">
-						Courses
-						<i class="dropdown icon"></i>
-						<div class="menu">
-							<a class="item">Petting</a>
-							<a class="item">Feeding</a>
-							<a class="item">Mind Reading</a>
-						</div>
-					</div>
-					<a class="item">Library</a>
-					<a class="item">Community</a>
+					<a href="" class="item"><i class="block layout icon"></i></a>
+					<a href="" class="item"><i class="grid layout icon"></i></a>
+					<a href="" class="item"><i class="list layout icon"></i></a>
 				</div>
 			</div>
 		</header>

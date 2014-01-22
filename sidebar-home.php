@@ -3,7 +3,15 @@
 
 				<div class="site-cover"></div>
 
-				<h1 class="site-title"><a href="<?php echo home_url('/') ?>"><?php bloginfo('name') ?></a></h1>
+				<div id="sidebar-social-menu" class="ui inverted menu">
+					<a href="" class="item item-facebook" title=""><i class="facebook icon"></i></a>
+					<a href="" class="item item-twitter" title=""><i class="twitter icon"></i></a>
+					<a href="" class="item item-google" title=""><i class="google plus icon"></i></a>
+					<a href="" class="item item-github" title=""><i class="github icon"></i></a>
+					<a href="" class="right item item-more" title=""><i class="ellipsis horizontal icon"></i></a>
+				</div>
+
+				<?php lebret_menu( 'secondary', array( 'id' => 'sidebar-secondary-menu', 'container_class' => 'ui secondary inverted vertical pointing menu' ) ) ?>
 
 				<?php dynamic_sidebar( 'sidebar-home' ); ?>
 

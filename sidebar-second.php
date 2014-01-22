@@ -1,4 +1,4 @@
 
-			<aside id="sidebar-second" class="ui three wide column justified">
+			<aside id="sidebar-second" class="ui five wide column justified">
 				<?php dynamic_sidebar( 'sidebar-second' ); ?>
 			</aside>

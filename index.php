@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<?php get_sidebar('home'); ?>
+<?php get_sidebar(); ?>
 
 		<section id="main" class="main-content ui thirteen wide column">
 			<div class="ui three column justified aligned stackable grid">

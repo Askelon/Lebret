@@ -57,8 +57,8 @@ add_action( 'admin_print_styles-appearance_page_custom-header', 'lebret_custom_h
 function lebret_widgets_init() {
 	register_sidebar( array(
 		'name'          => __( 'Home Widget Area', 'lebret' ),
-		'id'            => 'sidebar-home',
-		'description'   => __( 'Appears only on Homepage.', 'lebret' ),
+		'id'            => 'sidebar',
+		'description'   => __( 'Appears on left', 'lebret' ),
 		'before_widget' => '<article id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</article>',
 		'before_title'  => '<h4 class="">',
@@ -66,21 +66,12 @@ function lebret_widgets_init() {
 	) );
 	register_sidebar( array(
 		'name'          => __( 'Blog Right First Widget Area', 'lebret' ),
-		'id'            => 'sidebar-first',
-		'description'   => __( 'Appears in the right section of the Blog Posts View.', 'lebret' ),
-		'before_widget' => '<article id="%1$s" class="ui stacked segment widget %2$s">',
-		'after_widget'  => '</article>',
-		'before_title'  => '<h4 class="ui block header widget-title">',
-		'after_title'   => '</h4>',
-	) );
-	register_sidebar( array(
-		'name'          => __( 'Blog Right Second Widget Area', 'lebret' ),
 		'id'            => 'sidebar-second',
 		'description'   => __( 'Appears in the right section of the Blog Posts View.', 'lebret' ),
-		'before_widget' => '<article id="%1$s" class="widget %2$s">',
+		'before_widget' => '<article id="%1$s" class="ui inverted segment widget %2$s">',
 		'after_widget'  => '</article>',
-		'before_title'  => '<h3 class="widget-title">',
-		'after_title'   => '</h3>',
+		'before_title'  => '<h4 class="ui block widget-title">',
+		'after_title'   => '</h4>',
 	) );
 }
 add_action( 'widgets_init', 'lebret_widgets_init' );

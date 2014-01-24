@@ -5,7 +5,7 @@
 		<section id="main" class="content ui thirteen wide column">
 			<div class="ui column justified aligned stackable grid">
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-				<article <?php post_class( 'ui eleven wide column' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
+				<article id="post-<?php the_ID() ?>" <?php post_class( 'ui eleven wide column' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
 <?php if ( has_post_thumbnail() ) : ?>
 					<div class="post-thumbnail"><?php the_post_thumbnail( 'large' ) ?></div>
 <?php endif; ?>
@@ -25,13 +25,18 @@
 						<?php the_content(); ?>
 					</div>
 					<footer class="entry-footer">
-						<div class="ui inverted menu">
-							<a href="<?php the_permalink() ?>" class="item item-date" title="<?php the_time('j F Y') ?>"><i class="calendar icon"></i> <?php the_date('j-n-Y') ?></a>
-							<?php comments_popup_link( '<i class="comment icon"></i> 0', '<i class="comment icon"></i> 1', '<i class="comment icon"></i> %', 'item item-comments' ); ?>
-							<a href="<?php the_permalink() ?>" class="right active item item-readmore" title="<?php _e( 'Read More', 'lebret' ) ?>"></i> <i class="right large angle icon"></i></a>
+						<div id="about-author" class="about-author clear">
+							<h4 class="author-name"><?php _e( 'About the Author', 'lebret' ); ?></h4>
+							<?php echo get_avatar( get_the_author_meta( 'ID' ) ); ?>
+							<p class="author-description"><?php echo get_the_author_meta( 'description' ); ?></p>
 						</div>
 					</footer>
 				</article>
+
+				<article id="post-comments" class="ui eleven wide column" role="comment" itemscope itemtype="http://schema.org/Article">
+					<?php comments_template() ?>
+				</article>
+
 <?php endwhile; endif; ?>
 
 <?php get_sidebar('second'); ?>

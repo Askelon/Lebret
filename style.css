@@ -24,16 +24,18 @@ Text Domain: lebret
  *   6.2 - Entry Header
  *   6.3 - Entry Meta
  *   6.4 - Entry Content
- *   6.5 - Galleries
- *   6.6 - Post Formats
- *   6.7 - Post/Image/Paging Navigation
- *   6.8 - Attachments
- *   6.9 - Archives
- *   6.10 - Contributor Page
- *   6.11 - 404 Page
- *   6.12 - Full-width
- *   6.13 - Singular
- *   6.14 - Comments
+ *   6.5 - Entry Footer
+ *   6.6 - Entry Author Box
+ *   6.7 - Galleries
+ *   6.8 - Post Formats
+ *   6.9 - Post/Image/Paging Navigation
+ *   6.10 - Attachments
+ *   6.11 - Archives
+ *   6.12 - Contributor Page
+ *   6.13 - 404 Page
+ *   6.14 - Full-width
+ *   6.15 - Singular
+ *   6.16 - Comments
  * 7.0 - Sidebar
  *   7.1 - Widgets
  *   7.2 - Content Sidebar Widgets
@@ -459,13 +461,13 @@ hr {
  * to achieve a better experience. See http://core.trac.wordpress.org/ticket/25898.
  */
 ::selection {
-	background: #24890d;
+	background: #1499D3;
 	color: #fff;
 	text-shadow: none;
 }
 
 ::-moz-selection {
-	background: #24890d;
+	background: #1499D3;
 	color: #fff;
 	text-shadow: none;
 }
@@ -762,6 +764,12 @@ img.aligncenter,
 	clear: both;
 }
 
+.clear:after {
+	clear: both !important;
+	content: ' ' !important;
+	display: block !important;
+}
+
 /* Genericons */
 
 .bypostauthor > article .fn:before,
@@ -802,7 +810,7 @@ span + .edit-link:before,
 .site {
 	background-color: #35404F;
 	font-family: Lato, Source Sans Pro, sans-serif;
-	font-weight: 100;
+	font-weight: 300;
 	margin: 0 !important;
 	max-width: 100%;
 	overflow: hidden !important;
@@ -849,7 +857,7 @@ span + .edit-link:before,
 
 .site-title {
 	font-size: 0.95rem;
-	font-weight: 100;
+	font-weight: 300;
 	line-height: 1.5em;
 	margin: 0;
 	padding-top: 0.5em;
@@ -890,7 +898,7 @@ span + .edit-link:before,
 	border: 0;
 	color: #666;
 	font-size: 2em;
-	font-weight: 100;
+	font-weight: 300;
 	height: 1.8em;
 	margin: 0.25em 0.5%;
 	width: 99%;
@@ -968,6 +976,7 @@ span + .edit-link:before,
 	margin-left: 18.75%;
 	margin-top: 5.35em !important;
 	padding: 0 !important;
+	position: relative;
 	width: 100%;
 }
 
@@ -978,7 +987,7 @@ span + .edit-link:before,
 	margin: 0 !important;
 	padding: 0 !important;
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 }
 
 .main-content .hentry {
@@ -1000,7 +1009,7 @@ span + .edit-link:before,
 	content: '+';
 	font-family: serif;
 	font-size: 2em;
-	font-weight: 100;
+	font-weight: 300;
 	right: 0.25em;
 	position: absolute;
 	top: -0.1em;
@@ -1054,6 +1063,23 @@ a.post-thumbnail:hover {
 	width: 75%;
 }
 
+.entry-title {
+	background: #fff;
+	font-family: Lato;
+	font-size: 2rem;
+	font-weight: 300;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	text-transform: uppercase;
+}
+
+
+/**
+ * 6.3 Entry Meta
+ * -----------------------------------------------------------------------------
+ */
+
 .entry-meta .meta {
 	margin-right: 1.5rem;
 }
@@ -1071,23 +1097,6 @@ a.post-thumbnail:hover {
 .entry-meta a:hover {
 	color: #1499D3;
 }
-
-.entry-title {
-	background: #fff;
-	font-family: Lato;
-	font-size: 2rem;
-	font-weight: 100;
-	margin: 0;
-	padding: 0;
-	position: relative;
-	text-transform: uppercase;
-}
-
-
-/**
- * 6.3 Entry Meta
- * -----------------------------------------------------------------------------
- */
 
 
 /**
@@ -1136,9 +1145,150 @@ a.post-thumbnail:hover {
 }
 
 
+/**
+ * 6.6 Entry Author Box
+ * -----------------------------------------------------------------------------
+ */
+
+#about-author {
+	background: #f5f5f5;
+	border-bottom: 0.25rem solid #1499D3;
+}
+
+#about-author .author-name {
+	background: #1499D3;
+	color: #fff;
+	font-family: Lato;
+	font-size: 1.25rem;
+	font-weight: 300;
+	margin: 1rem 0 0 0;
+	padding: 0.5rem 1.5rem;
+}
+
+#about-author .avatar {
+	float: left;
+	width: 12.5%;
+}
+
+#about-author .author-description {
+	width: 87.5%;
+}
 
 
+/**
+ * 6.7 Comments
+ * -----------------------------------------------------------------------------
+ */
 
+#post-comments {
+	margin: 0;
+	padding: 0;
+}
+
+#post-comments .comments-title {
+	background: #1499D3;
+	color: #fff;
+	font-family: Lato;
+	font-size: 1.25rem;
+	font-weight: 300;
+	margin: 0;
+	padding: 0.5rem 1.5rem;
+}
+
+#post-comments .comment-list {
+	list-style: none;
+	margin: 0;
+}
+
+#post-comments .comment-author {
+	background: #f5f5f5;
+	color: #333;
+	padding: 0.25rem 1.5rem;
+}
+
+#post-comments .comment-author a {
+	color: #888;
+}
+
+#post-comments .comment-author a:hover {
+	color: #333;
+}
+
+#post-comments .comment-author .comment-permalink {
+	float: right;
+	font-size: small;
+	line-height: 1.5rem;
+}
+
+#post-comments .comment-author .fn a {
+	color: #333;
+}
+
+#post-comments .comment-body {
+	background: #1b1b1b;
+	overflow: hidden;
+}
+
+#post-comments .avatar {
+	float: left;
+	height: auto;
+	margin: 0 1rem 0 0;
+	width: 12.5%;
+}
+
+#post-comments .comment-text {
+	min-height: 96px;
+}
+
+#post-comments .comment-text p {
+	color: #ccc;
+	margin: 0 0 0.75rem 0;
+	padding: 0.75rem 1rem 0 1rem;
+}
+
+#post-comments .comment-footer {
+	background: #333;
+	padding: 0.25rem 0.5rem;
+	text-align: right;
+}
+
+#post-comments .comment-reply-link {
+	color: #ccc;
+}
+
+#post-comments .comment-reply-link:hover {
+	color: #fff;
+}
+
+/* Children */
+
+#post-comments .children {
+	margin: 0;
+}
+
+#post-comments .children .comment-body {
+	background: #252525;
+	border-top: 1px solid #333;
+}
+
+#post-comments .children .avatar {
+	width: 8.25%;
+}
+
+#post-comments .children .fn a {
+	color: #eee;
+	font-weight: 400;
+}
+
+#respond .comment-reply-title {
+	background: #1499D3;
+	color: #fff;
+	font-family: Lato;
+	font-size: 1.25rem;
+	font-weight: 300;
+	margin: 0;
+	padding: 0.5rem 1.5rem;
+}
 
 
 /**
@@ -1210,7 +1360,7 @@ a.post-thumbnail:hover {
 }
 
 #sidebar .site-cover {
-	background: #444 url(images/cover_3.jpg) left top no-repeat;
+	background: #444 url(assets/img/cover_3.jpg) left top no-repeat;
 	height: 14em;
 	margin: 0 -1.5rem;
 }
@@ -1251,7 +1401,7 @@ a.post-thumbnail:hover {
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	width: 25.5%;
+	top: 0;
 }
 
 #sidebar-second a {
@@ -1264,14 +1414,15 @@ a.post-thumbnail:hover {
 
 #sidebar-second .widget {
 	background: transparent;
+	padding: 0 1rem;
 }
 
 #sidebar-second .widget-title {
 	background: #1499D3;
 	font-family: Lato;
 	font-size: 1rem;
-	font-weight: 100;
-	margin: 0 -1em;
+	font-weight: 300;
+	margin: 0 -1em 1.5em -1em;
 	padding: 0.5rem 1.5rem;
 	text-transform: uppercase;
 }
@@ -1281,8 +1432,10 @@ a.post-thumbnail:hover {
 	border-radius: 0;
 	box-shadow: 0.25em 0 0.25em rgba(0, 0, 0, 0.25);
 	height: 100%;
+	padding: 1rem 1rem 0 1rem;
 	position: absolute;
 	width: 30%;
+	z-index: 1;
 }
 
 #sidebar-second #archives-timeline ul {

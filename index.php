@@ -20,9 +20,17 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); $i++;
 					</header>
 <?php if ( $featured ) : ?>
 					<div class="entry-content" itemprop="articleBody">
-						<?php the_excerpt(); ?>
+						<p><?php lebret_excerpt( 55 ); ?></p>
 					</div>
-<?php endif; ?>
+<?php else : ?>
+					<div class="entry-content" itemprop="articleBody">
+						<p><?php lebret_excerpt(); ?></p>
+					</div>
+<?php
+endif;
+if ( 3 == $i ) :
+	$featured = false;
+endif; ?>
 					<footer class="entry-footer">
 						<div class="ui inverted menu">
 							<a href="<?php the_permalink() ?>" class="item item-date" title="<?php the_time('j F Y') ?>"><i class="calendar icon"></i> <?php the_date('j-n-Y') ?></a>
@@ -31,11 +39,6 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); $i++;
 						</div>
 					</footer>
 				</article>
-<?php if ( $featured && 3 == $i ) : ?>
-			</div>
-
-			<div class="ui three column justified aligned stackable grid">
-<?php $featured = false; endif; ?>
 <?php endwhile; endif; wp_reset_query(); ?>
 			</div>
 

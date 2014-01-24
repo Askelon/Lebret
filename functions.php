@@ -42,7 +42,7 @@ add_action( 'after_setup_theme', 'lebret_setup' );
  */
 function lebret_custom_header_fonts() {
 
-	wp_enqueue_style( 'lebret-fonts', '//fonts.googleapis.com/css?family=Open+Sans:300,700', array(), null );
+	//wp_enqueue_style( 'lebret-fonts', '//fonts.googleapis.com/css?family=Open+Sans:300,700', array(), null );
 }
 add_action( 'admin_print_styles-appearance_page_custom-header', 'lebret_custom_header_fonts' );
 
@@ -84,18 +84,19 @@ add_action( 'widgets_init', 'lebret_widgets_init' );
  */
 function lebret_scripts() {
 
+	wp_register_style( 'fonts', '//fonts.googleapis.com/css?family=Lato:100,200,300,400,900|Source+Sans+Pro:400,700', array(), false, 'all' );
+	wp_register_style( 'semantic', get_template_directory_uri() . '/assets/css/semantic.css', array(), false, 'all' );
 	wp_register_style( 'lebret', get_stylesheet_uri(), array(), false, 'all' );
-	wp_register_style( 'open-sans', "//fonts.googleapis.com/css?family=Open+Sans:100,300,700", array(), false, 'all' );
-	wp_register_style( 'lato', '//fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic', array(), false, 'all' );
 
-	wp_register_script( 'lebret', get_template_directory_uri() . '/assets/js/public.js', array( 'jquery' ), false, true );
-
-	wp_enqueue_style( 'open-sans' );
-	wp_enqueue_style( 'lato' );
+	wp_enqueue_style( 'fonts' );
+	wp_enqueue_style( 'semantic' );
 	wp_enqueue_style( 'lebret' );
 
+	wp_register_script( 'lebret', get_template_directory_uri() . '/assets/js/public.js', array( 'jquery', 'jquery-masonry' ), false, true );
+	wp_register_script( 'semantic', get_template_directory_uri() . '/assets/js/semantic.js', array( 'jquery' ), false, true );
+
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'masonry' );
+	wp_enqueue_script( 'jquery-masonry' );
 	wp_enqueue_script( 'lebret' );
 	wp_enqueue_script( 'comment-reply' );
 }
@@ -177,6 +178,37 @@ function lebret_menu( $menu_name = 'primary', $args = array() ) {
 		}
 	}
 }
+
+function lebret_excerpt_length( $length ) {
+	return $length;
+}
+
+function lebret_get_excerpt( $length = 30, $content = null ) {
+
+	if ( is_null( $content ) ) {
+		global $post;
+		$content = $post->post_content;
+
+		if ( is_null( $content ) )
+			return null;
+	}
+
+	$text = trim( $post->post_content );
+	$text = strip_shortcodes( $text );
+	$text = apply_filters( 'the_content', $text );
+	
+	$excerpt_length = (int) $length;
+	$excerpt_more   = '…';
+	$text           = wp_trim_words( $text, $excerpt_length, $excerpt_more );
+
+	return $text;
+}
+
+
+function lebret_excerpt( $length = 30, $content = null ) {
+	echo lebret_get_excerpt( $length, $content );
+}
+
 
 /**
  * Prints HTML with date information for current post.
@@ -397,51 +429,67 @@ function lebret_comments( $comment, $args, $depth ) {
 
 	extract( $args, EXTR_SKIP );
 
+	if ( 1 == $depth ) :
+
 ?>
 
 				<li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
-
 					<article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-
 						<header class="comment-header">
 							<div class="comment-author vcard">
-								<?php echo get_avatar( $comment->comment_author_email, 74 ); ?>
-								<?php printf( '<div class="vcar-content"><cite class="fn">%s</cite></div>', get_comment_author_link(), __( 'says', 'lebret' ) ); ?>
+								<?php
+								printf(
+									'%s<cite class="fn">%s</cite> <a class="comment-permalink" href="%s">%s</a>',
+									( $depth > 1 ? '<i class="icon reply mail"></i> ' : '' ),
+									get_comment_author_link(),
+									esc_url( get_comment_link( $comment->comment_ID ) ),
+									sprintf( __( '%1$s at %2$s', 'lebret' ), get_comment_date(), get_comment_time() )
+								);
+								?>
 							</div>
 						</header>
-
 						<div class="comment-text">
 <?php if ( '0' == $comment->comment_approved ) : ?>
 							<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'lebret' ) ?></em><br />
 <?php endif; ?>
 
+							<?php echo get_avatar( $comment->comment_author_email, 128 ); ?>
 							<?php comment_text(); ?>
 						</div>
-
-						<footer class="comment-meta">
-							<ul>
-								<li class="comment-date"><span class="entypo">&#128340;</span> &nbsp;<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s at %2$s', 'lebret' ), get_comment_date(),  get_comment_time() ); ?></a></li>
-								<?php edit_comment_link( __( 'Edit', 'lebret' ), '<li class="comment-edit"><span class="entypo">&#9998;</span> &nbsp;', '</li>' ); ?>
-								<?php
-									comment_reply_link(
-										array_merge(
-											$args,
-											array(
-												'before'     => '<li class="comment-reply">',
-												'reply_text' => '<span class="entypo">&#59154;</span> &nbsp;' . __( 'Reply', 'lebret' ),
-												'after'      => '</li>',
-												'depth'      => $depth,
-												'max_depth'  => $args['max_depth']
-											)
+						<footer class="comment-footer">
+							<?php
+								comment_reply_link(
+									array_merge(
+										$args,
+										array(
+											'before'     => '',
+											'reply_text' => '<i class="icon reply mail"></i>&nbsp;' . __( 'Reply', 'cyrano' ),
+											'after'      => '',
+											'depth'      => $depth,
+											'max_depth'  => $args['max_depth']
 										)
-									); ?>
-							</ul>
+									)
+								); ?>
 						</footer>
-
 					</article>
-
-				</li>
 <?php
+	elseif ( 1 < $depth ) :
+?>
+
+				<li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
+					<article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+						<div class="comment-text">
+<?php if ( '0' == $comment->comment_approved ) : ?>
+							<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'lebret' ) ?></em><br />
+<?php endif; ?>
+
+							<?php echo get_avatar( $comment->comment_author_email, 128 ); ?>
+							<?php printf( '<cite class="fn">%s</cite>', get_comment_author_link() ); ?>
+							<?php comment_text(); ?>
+						</div>
+					</article>
+<?php
+	endif;
 }
 
 
@@ -582,11 +630,11 @@ add_action( 'customize_register', 'lebret_theme_customizer' );
  *
  * @since 2.8.0
  */
-class DeGuiche_Widget_Categories extends WP_Widget {
+class Lebret_Widget_Categories extends WP_Widget {
 
         function __construct() {
-                $widget_ops = array( 'classname' => 'lebret_widget_categories', 'description' => __( "A list or dropdown of categories. This is a copy of the Categories Widget, DeGuiche styled." ) );
-                parent::__construct('lebret_categories', __('DeGuiche Categories'), $widget_ops);
+                $widget_ops = array( 'classname' => 'lebret_widget_categories', 'description' => __( "A list or dropdown of categories. This is a copy of the Categories Widget, Lebret styled." ) );
+                parent::__construct('lebret_categories', __('Lebret Categories'), $widget_ops);
         }
 
         function widget( $args, $instance ) {
@@ -695,11 +743,11 @@ class DeGuiche_Widget_Categories extends WP_Widget {
  *
  * @since 3.0.0
  */
- class DeGuiche_Nav_Menu_Widget extends WP_Widget {
+ class Lebret_Nav_Menu_Widget extends WP_Widget {
 
         function __construct() {
                 $widget_ops = array( 'description' => __('Add a custom menu to your sidebar.') );
-                parent::__construct( 'lebret_nav_menu', __('DeGuiche Custom Menu'), $widget_ops );
+                parent::__construct( 'lebret_nav_menu', __('Lebret Custom Menu'), $widget_ops );
         }
 
         function widget($args, $instance) {
@@ -779,7 +827,7 @@ class DeGuiche_Widget_Categories extends WP_Widget {
 
 function lebret_widgets() {
 
-	register_widget( 'DeGuiche_Widget_Categories' );
-	register_widget( 'DeGuiche_Nav_Menu_Widget' );
+	register_widget( 'Lebret_Widget_Categories' );
+	register_widget( 'Lebret_Nav_Menu_Widget' );
 }
 add_action( 'widgets_init', 'lebret_widgets' );

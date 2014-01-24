@@ -3,21 +3,12 @@
 <html>
 
 	<head>
-		<!-- Standard Meta -->
-		<meta charset="utf-8" />
+
+		<meta charset="<?php bloginfo('charset') ?>" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-		<!-- Site Properities -->
 		<title><?php wp_title('') ?></title>
-
-		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
-
-		<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri() ?>/css/semantic.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri() ?>">
-
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
-		<script src="<?php echo get_template_directory_uri() ?>/js/semantic.js"></script>
 
 		<?php wp_head(); ?>
 

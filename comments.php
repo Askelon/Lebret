@@ -45,7 +45,7 @@ if ( comments_open() ) : ?>
 <?php
 		endif; // Check for comment navigation
 	else : ?>
-					<p><em><?php _e( 'No comment yet. Want to be the first?', 'lebret' ); ?></em></p>
+					<!--<p><em><?php _e( 'No comment yet. Want to be the first?', 'lebret' ); ?></em></p>-->
 <?php endif; // have_comments() ?>
 
 					<?php
@@ -58,8 +58,9 @@ if ( comments_open() ) : ?>
 								'email'                => '<div class="comment-form-email"><div class="comment-form-label"><label for="email">' . __( 'Email', 'lebret' ) . ' <span class="required">*</span></label></div><div class="comment-form-input">' . '<input id="email" name="email" type="email" value="" size="30" aria-required="true" placeholder="' . __( 'john@johndoe.me', 'lebret' ) . '" /></div></div>',
 								'url'                  => '<div class="comment-form-url"><div class="comment-form-label"><label for="url">' . __( 'Website', 'lebret' ) . '</label></div><div class="comment-form-input">' . '<input id="url" name="url" type="url" value="" size="30" placeholder="' . __( 'http://johndoe.me', 'lebret' ) . '" /></div></div><div style="clear:both"></div>'
 							),
-							'comment_field'        => '<div class="comment-respond-content"><div class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" placeholder="' . __( 'Want to say something? Please, help yourself!', 'lebret' ) . '"></textarea></div>',
-							'logged_in_as'         => '<div class="logged-in-as">' . get_avatar( $user->user_email, 74 ) . '<div class="comment-author-vcard">' . sprintf( '<a href="%1$s">%2$s</a> <a href="%3$s" title="%3$s"><span class="entypo">&#59201;</span></a></div>', get_edit_user_link(), $user_identity, wp_logout_url( apply_filters( 'the_permalink', get_permalink() ) ), __( 'Log out of this account', 'lebret' ) ) . '</div>'
+							'comment_field'        => '<div class="comment-respond-content">' . get_avatar( $user->user_email, 96 ) . '<div class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="4" aria-required="true" placeholder="' . __( 'Want to say something? Please, help yourself!', 'lebret' ) . '"></textarea></div>',
+							'logged_in_as'         => '<div class="logged-in-as"><div class="comment-author-vcard">' . sprintf( '<a href="%1$s">%2$s</a> <a href="%3$s" title="%3$s"></a></div>', get_edit_user_link(), $user_identity, wp_logout_url( apply_filters( 'the_permalink', get_permalink() ) ), __( 'Log out of this account', 'lebret' ) ) . '</div>',
+							'comment_notes_after'  => '',
 						)
 					); ?>
 

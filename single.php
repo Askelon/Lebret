@@ -24,13 +24,6 @@
 					<div class="entry-content" itemprop="articleBody">
 						<?php the_content(); ?>
 					</div>
-					<footer class="entry-footer">
-						<div id="about-author" class="about-author clear">
-							<h4 class="author-name"><?php _e( 'About the Author', 'lebret' ); ?></h4>
-							<?php echo get_avatar( get_the_author_meta( 'ID' ) ); ?>
-							<p class="author-description"><?php echo get_the_author_meta( 'description' ); ?></p>
-						</div>
-					</footer>
 				</article>
 
 				<article id="post-comments" class="ui eleven wide column" role="comment" itemscope itemtype="http://schema.org/Article">

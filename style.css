@@ -1016,6 +1016,65 @@ span + .edit-link:before,
 }*/
 
 
+/**
+ * 6.0 Post Terms
+ * -----------------------------------------------------------------------------
+ */
+
+.post-tags {
+	font-size: 0.75rem;
+	font-weight: 400;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	top: 0.5rem;
+	text-transform: uppercase;
+	z-index: 2;
+}
+
+.post-tags .post-tag {
+	display: block;
+	list-style: none;
+	padding: 0.25rem 0;
+}
+
+.post-tags .post-tag span {
+	background: #efefef;
+	margin: 0.25rem 0;
+	padding: 0.25rem 0.75rem;
+}
+
+.post-tags .post-tag a {
+	color: #aaa;
+}
+
+.post-tags .post-tag:hover span {
+	background: #1499D3;
+	border-bottom: 1px solid #1499D3;
+	position: relative;
+}
+
+.post-tags .post-tag:hover a {
+	color: #fff;
+}
+
+.post-tags .post-tag:hover span::before {
+	border: 12px solid rgba(0, 0, 0, 0);
+	border-right-color: #1499D3;
+	content: ' ';
+	position: absolute;
+	left: -24px;
+	top: 0;
+}
+
+.post-tags .post-tag:hover span::after {
+	border: 2px solid #fff;
+	border-radius: 2px;
+	content: ' ';
+	left: -2px;
+	position: absolute;
+	top: 10px;
+}
 
 
 /**

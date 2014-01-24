@@ -366,55 +366,37 @@ function lebret_post_nav() {
 <?php
 }
 
-/**
- * Displays a Post thumbnail. If no Thumbnail was set, show a default one. If no
- * Post ID is submitted, use the current Post.
- *
- * @param    int        $post_id Post's ID. Default null.
- * @param    boolean    $echo Whether to echo the image. Default true.
- *
- * @since    1.0
- */
-function lebret_post_cover( $post_id = null, $echo = true ) {
+
+function lebret_tags( $limit = 4 ) {
+
+	global $post;
 
 	$html = '';
 
-	if ( is_null( $post_id ) ) {
-		global $post;
-		$post_id = $post->ID;
-	}
+	$tags = get_the_tags();
 
-	$t_id = get_post_thumbnail_id( $post_id );
-	$thumbnail = wp_get_attachment_image_src( $t_id, 'large' );
+	if ( ! empty( $tags ) ) {
 
-	if ( ! $thumbnail ) {
-		$html = sprintf( '<img class="landscape" src="%s" width="896" height="480" alt="%s" />'."\n", get_template_directory_uri() . '/assets/img/default_cover.jpg', get_bloginfo('name') );
-	}
-	else {
-		$w = $thumbnail[1];
-		$h = $thumbnail[2];
+		$html .= '<div class="post-tags"><ul>';
 
-		$landscape = ( $w > $h );
-		$wide      = ( $w > ( 2 * $h ) );
+		if ( 0 < $limit )
+			$tags = array_slice( $tags, 0, $limit );
 
-		if ( $wide ) {
-			$class = 'class="wide"';
-		}
-		else if ( $landscape ) {
-			$class = 'class="landscape"';
-		}
-		else {
-			$class = '';
+		foreach ( $tags as $tag ) {
+			$url = get_term_link( $tag );
+			if ( ! is_wp_error( $url ) )
+				$html .= sprintf( '<li class="post-tag"><span><a href="%s" title="%s">%s</a></span></li>', $url, $tag->description, $tag->name );
 		}
 
-		$html = sprintf( '<img %s src="%s" width="%d" height="%d" alt="%s" />'."\n", $class, $thumbnail[0], $w, $h, get_the_title( $post_id ) );
+		if ( 0 < $limit )
+			$html .= '<li class="post-tag"><span><a href="#post-tags">…</a></span></li>';
+
+		$html .= '</ul></div>';
 	}
 
-	if ( $echo )
-		echo $html;
-	else
-		return $html;
+	echo $html;
 }
+
 
 /**
  * Displays a custom Comments List.

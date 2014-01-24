@@ -6,6 +6,9 @@
 			<div class="ui column justified aligned stackable grid">
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 				<article id="post-<?php the_ID() ?>" <?php post_class( 'ui eleven wide column' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
+					<div class="entry-terms">
+						<?php lebret_tags( 2 ) ?>
+					</div>
 <?php if ( has_post_thumbnail() ) : ?>
 					<div class="post-thumbnail"><?php the_post_thumbnail( 'large' ) ?></div>
 <?php endif; ?>

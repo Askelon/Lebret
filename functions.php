@@ -99,23 +99,60 @@ function lebret_scripts() {
 	wp_enqueue_script( 'jquery-masonry' );
 	wp_enqueue_script( 'lebret' );
 	wp_enqueue_script( 'comment-reply' );
+
+	$wp_ajax = array(
+		'ajax_url' => admin_url( 'admin-ajax.php' ),
+	);
+
+	wp_localize_script( 'lebret', 'wp_ajax', $wp_ajax );
 }
 add_action( 'wp_enqueue_scripts', 'lebret_scripts' );
 
 
-/**
-* Get the site logo
-* If no logo is set in the theme's options, use default WP-Badge as logo 
-* 
-* @since    De Guiche 1.0
-*
-* @return   string        The site logo URL.
-*/
-function lebret_site_logo() {
-	$site_logo = get_theme_mod( 'lebret_logo', get_template_directory_uri() . '/assets/img/logo_128.png' );
-	return $site_logo;
-}
+function lebret_load_posts_callback() {
 
+	$offset = ( isset( $_POST['offset'] ) && '' != $_POST['offset'] ? (int) $_POST['offset'] : null );
+
+	if ( is_null( $offset ) )
+		die( __( 'Nothing left do show!', 'lebret' ) );
+
+	$query = new WP_Query( 'offset=' . $offset );
+	if ( $query->have_posts() ) :
+		while ( $query->have_posts() ) :
+			$query->the_post();
+?>
+				<article <?php post_class( 'column' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
+					<header class="entry-header">
+<?php if ( has_post_thumbnail() ) : ?>
+						<div class="post-thumbnail"><?php the_post_thumbnail( 'medium' ) ?></div>
+<?php endif; ?>
+						<h5 class="entry-title" itemprop="headline">
+							<a href="<?php the_permalink() ?>" rel="bookmark"><?php the_title() ?></a>
+							<?php edit_post_link( '&#9998;', '<span class="edit-link entypo">', '</span>' ); ?>
+						</h5>
+					</header>
+
+					<div class="entry-content" itemprop="articleBody">
+						<p><?php lebret_excerpt(); ?></p>
+					</div>
+
+					<footer class="entry-footer">
+						<div class="ui inverted menu">
+							<a href="<?php the_permalink() ?>" class="item item-date" title="<?php the_time('j F Y') ?>"><i class="calendar icon"></i> <?php the_date('j-n-Y') ?></a>
+							<?php comments_popup_link( '<i class="comment icon"></i> 0', '<i class="comment icon"></i> 1', '<i class="comment icon"></i> %', 'item item-comments' ); ?>
+							<a href="<?php the_permalink() ?>" class="right active item item-readmore" title="<?php _e( 'Read More', 'lebret' ) ?>"> <i class="right large angle icon"></i></a>
+						</div>
+					</footer>
+				</article>
+<?php
+			wp_reset_query();
+		endwhile;
+	endif;
+
+	die();
+}
+add_action( 'wp_ajax_load_posts', 'lebret_load_posts_callback' );
+add_action( 'wp_ajax_nopriv_load_posts', 'lebret_load_posts_callback' );
 
 /**
  * Displays De Guiche Menus.
@@ -130,7 +167,8 @@ function lebret_menu( $menu_name = 'primary', $args = array() ) {
 	$defaults = array(
 		'id'              => 'nav-' . $menu_name . '-menu',
 		'container_class' => 'ui secondary vertical pointing menu',
-		'item_class'      => 'item'
+		'item_class'      => 'item',
+		'add_icons'       => false
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -143,6 +181,8 @@ function lebret_menu( $menu_name = 'primary', $args = array() ) {
 		_wp_menu_item_classes_by_context( $items );
 		$prev        = 0;
 		$prev_parent = 0;
+		$icon        = '';
+		$attr_title  = '';
 
 		if ( $items ) {
 ?>
@@ -150,10 +190,18 @@ function lebret_menu( $menu_name = 'primary', $args = array() ) {
 <?php
 			foreach ( $items as $item ) {
 
+				if ( $add_icons ) {
+					$attr_title = $item->title;
+					$item->title .= ' <i class="' . $item->attr_title . '"></i>';
+				}
+				else {
+					$attr_title = $item->attr_title;
+				}
+
 				if ( ! $item->menu_item_parent ) {
 					$parent_id = $item->ID;
 ?>
-							<a id="menu-item-<?php echo $item->post_name ?>" href="<?php echo $item->url ?>" class="<?php echo $item_class . $class . implode( ' ', $item->classes ) ?>" title="<?php echo $item->attr_title ?>"><?php echo $item->title ?></a>
+							<a id="menu-item-<?php echo $item->post_name ?>" href="<?php echo $item->url ?>" class="<?php echo $item_class . $class . implode( ' ', $item->classes ) ?>" title="<?php echo $attr_title ?>"><?php echo $item->title ?></a>
 <?php
 				}
 
@@ -161,7 +209,7 @@ function lebret_menu( $menu_name = 'primary', $args = array() ) {
 					if ( ! $submenu )
 						$submenu = true;
 ?>
-								<a id="menu-item-<?php echo $item->post_name ?>" href="<?php echo $item->url ?>" class="sub-menu-item <?php echo $item_class . implode( ' ', $item->classes ) ?>" title="<?php echo $item->attr_title ?>"><?php echo $item->title ?></a>
+								<a id="menu-item-<?php echo $item->post_name ?>" href="<?php echo $item->url ?>" class="sub-menu-item <?php echo $item_class . implode( ' ', $item->classes ) ?>" title="<?php echo $attr_title ?>"><?php echo $item->title ?></a>
 <?php
 					if ( $items[ $count + 1 ]->menu_item_parent != $parent_id && $submenu )
 						$submenu = false;
@@ -177,6 +225,55 @@ function lebret_menu( $menu_name = 'primary', $args = array() ) {
 <?php
 		}
 	}
+}
+
+/**
+ * Display archive links. This is an edited copy of wp_get_archives in order
+ * to get only monthly archives link with a custom date format.
+ * 
+ * @see wp_get_archives()
+ *
+ * @since 1.0.0
+ */
+function lebret_get_sidebar_archives() {
+
+	global $wpdb, $wp_locale;
+
+	$where = apply_filters( 'getarchives_where', "WHERE post_type = 'post' AND post_status = 'publish'", $r );
+	$join = apply_filters( 'getarchives_join', '', $r );
+
+	$output = '';
+
+	$last_changed = wp_cache_get( 'last_changed', 'posts' );
+	if ( ! $last_changed ) {
+		$last_changed = microtime();
+		wp_cache_set( 'last_changed', $last_changed, 'posts' );
+	}
+
+	
+	$query = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, count(ID) as posts FROM $wpdb->posts $join $where GROUP BY YEAR(post_date), MONTH(post_date) ORDER BY post_date $order $limit";
+	$key = md5( $query );
+	$key = "wp_get_archives:$key:$last_changed";
+	if ( ! $results = wp_cache_get( $key, 'posts' ) ) {
+		$results = $wpdb->get_results( $query );
+		wp_cache_set( $key, $results, 'posts' );
+	}
+	if ( $results ) {
+		foreach ( (array) $results as $result ) {
+			$url = get_month_link( $result->year, $result->month );
+			/* translators: 1: month name, 2: 4-digit year */
+			$text = sprintf( __( '%1$s %2$d' ), $wp_locale->get_month_abbrev( $wp_locale->get_month( $result->month ) ), $result->year );
+			$output .= get_archives_link( $url, $text, 'html', '', '' );
+		}
+	}
+
+	$output = '<ul>' . $output . '</ul>';
+
+	return $output;
+}
+
+function lebret_sidebar_archives() {
+	echo lebret_get_sidebar_archives();
 }
 
 function lebret_excerpt_length( $length ) {
@@ -209,37 +306,6 @@ function lebret_excerpt( $length = 30, $content = null ) {
 	echo lebret_get_excerpt( $length, $content );
 }
 
-
-/**
- * Prints HTML with date information for current post.
- *
- * Create your own lebret_entry_date() to override in a child theme.
- *
- * @since    1.0
- *
- * @param boolean $echo Whether to echo the date. Default true.
- *
- * @return string The HTML-formatted post date.
- */
-function lebret_entry_date( $echo = true ) {
-
-	if ( has_post_format( array( 'chat', 'status' ) ) )
-		$format_prefix = _x( '%1$s on %2$s', '1: post format name. 2: date', 'lebret' );
-	else
-		$format_prefix = '%2$s';
-
-	$date = sprintf( '<span class="date"><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s">%4$s</time></a></span>',
-		esc_url( get_permalink() ),
-		esc_attr( sprintf( __( 'Permalink to %s', 'lebret' ), the_title_attribute( 'echo=0' ) ) ),
-		esc_attr( get_the_date( 'c' ) ),
-		sprintf( '<span class="day">%s</span> <span class="monthyear"><span class="month">%s</span> <span class="year">%s</span></span>', get_the_date('j'), get_the_date('M'), get_the_date('Y') )
-	);
-
-	if ( $echo )
-		echo $date;
-
-	return $date;
-}
 
 /**
  * Prints HTML with meta information for current post: categories, tags,
@@ -310,31 +376,36 @@ function lebret_paging_nav() {
 
 	$page  = ( $wp_query->get('paged') ? $wp_query->get('paged') : 1 );
 	$total = $wp_query->max_num_pages;
+
+	$paginate = paginate_links(
+		array(
+			'type'      => 'array',
+			'total'     => $total,
+			'current'   => $page,
+			'prev_text' => '<i class="left angle icon"></i>',
+			'next_text' => '<i class="right angle icon"></i>',
+		)
+	);
 ?>
 
-				<div class="pagination">
-					<nav class="paging-navigation" role="pagination">
-<?php if ( get_previous_posts_link() ) : ?>
-						<div class="recent-posts"><?php previous_posts_link( __( '<span class="meta-nav">&larr;</span> Newer posts', 'lebret' ) ); ?></div>
-<?php
-endif;
-if ( get_next_posts_link() ) : ?>
-						<div class="older-posts"><?php next_posts_link( __( 'Older posts <span class="meta-nav">&rarr;</span>', 'lebret' ) ); ?></div>
-<?php endif; ?>
-						<div class="page-number">
-							<ul id="paginate-links">
-<?php
-for ( $i = 1; $i <= $total; $i++ ) : 
-	$selected = ( $i == $page );
-?>
-								<?php printf( '<li class="paginate-link%s" id="page_%d"><a href="%s">%s</a></li>', ( $selected ? ' selected' : '' ), $i, ( $selected ? '#' : get_pagenum_link( $i ) ), sprintf( __( 'Page %d of %d', 'lebret' ), $i, $total ) ) ?>
-
-<?php endfor; ?>
-							</ul>
-						</div>
+					<nav class="ui inverted pagination menu" role="pagination">
+<?php foreach ( $paginate as  $page ) :
+	echo str_replace(
+		array(
+			'page-numbers',
+			'next',
+			'prev',
+		),
+		array(
+			'item page-numbers',
+			'icon next',
+			'icon prev',
+		),
+		$page
+	);
+endforeach;  ?>
 					</nav>
-					<div style="clear:both"></div>
-				</div>
+					<div id="loadmore" class="ui hover tiny button"><i class="refresh icon"></i><?php _e( 'Load More', 'lebret' ) ?></div>
 <?php
 }
 
@@ -356,10 +427,10 @@ function lebret_post_nav() {
 	if ( ! $next && ! $previous )
 		return;
 ?>
-				<div class="pagination">
-					<nav class="post-navigation" role="navigation">
-						<div class="recent-posts"><?php previous_post_link( '%link', _x( '<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'lebret' ) ); ?></div>
-						<div class="older-posts"><?php next_post_link( '%link', _x( '%title <span class="meta-nav">&rarr;</span>', 'Next post link', 'lebret' ) ); ?></div>
+				<div class="ui eleven wide column pagination">
+					<nav class="ui grid post-navigation" role="navigation">
+						<div class="ui four wide column recent-posts"><?php previous_post_link( '%link', _x( '<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'lebret' ) ); ?></div>
+						<div class="ui four wide column older-posts"><?php next_post_link( '%link', _x( '%title <span class="meta-nav">&rarr;</span>', 'Next post link', 'lebret' ) ); ?></div>
 					</nav>
 					<div style="clear:both"></div>
 				</div>

@@ -126,6 +126,8 @@ class Lebret_Widget_Recent_Posts extends WP_Widget {
 			<div class="item">
 <?php if ( has_post_thumbnail() ) : ?>
 				<?php echo get_the_post_thumbnail( $r->ID, array( 32, 32 ), array( 'class' => "ui avatar attachment" ) ) ?>
+<?php else : ?>
+				<i class="square inverted text file icon"></i>
 <?php endif; ?>
 				<div class="content">
 					<?php if ( $show_date ) : ?><span class="post-date"><?php echo get_the_date('j M. Y'); ?></span> <?php endif; ?><a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : the_ID(); ?></a>

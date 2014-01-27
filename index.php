@@ -35,11 +35,15 @@ endif; ?>
 						<div class="ui inverted menu">
 							<a href="<?php the_permalink() ?>" class="item item-date" title="<?php the_time('j F Y') ?>"><i class="calendar icon"></i> <?php the_date('j-n-Y') ?></a>
 							<?php comments_popup_link( '<i class="comment icon"></i> 0', '<i class="comment icon"></i> 1', '<i class="comment icon"></i> %', 'item item-comments' ); ?>
-							<a href="<?php the_permalink() ?>" class="right active item item-readmore" title="<?php _e( 'Read More', 'lebret' ) ?>"></i> <i class="right large angle icon"></i></a>
+							<a href="<?php the_permalink() ?>" class="right active item item-readmore" title="<?php _e( 'Read More', 'lebret' ) ?>"> <i class="right large angle icon"></i></a>
 						</div>
 					</footer>
 				</article>
 <?php endwhile; endif; wp_reset_query(); ?>
+			</div>
+
+			<div class="pagination-container">
+				<?php lebret_paging_nav() ?>
 			</div>
 
 		</section><!-- /#main-->

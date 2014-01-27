@@ -29,6 +29,8 @@
 					</div>
 				</article>
 
+				<?php lebret_post_nav() ?>
+
 				<article id="post-comments" class="ui eleven wide column" role="comment" itemscope itemtype="http://schema.org/Article">
 					<?php comments_template() ?>
 				</article>

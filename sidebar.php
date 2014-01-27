@@ -11,7 +11,7 @@
 					<a href="" class="right item item-more" title=""><i class="ellipsis horizontal icon"></i></a>
 				</div>
 
-				<?php lebret_menu( 'secondary', array( 'id' => 'sidebar-secondary-menu', 'container_class' => 'ui secondary inverted vertical pointing menu' ) ) ?>
+				<?php lebret_menu( 'secondary', array( 'id' => 'sidebar-secondary-menu', 'add_icons' => true, 'container_class' => 'ui secondary inverted vertical pointing menu' ) ) ?>
 
 				<?php dynamic_sidebar( 'sidebar' ); ?>
 

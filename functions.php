@@ -2,10 +2,9 @@
 
 /**
  * Sets up theme defaults and registers the various WordPress features that
- * De Guiche supports.
+ * Lebret supports.
  *
  * @uses load_theme_textdomain() For translation/localization support.
- * @uses add_editor_style() To add Visual Editor stylesheets.
  * @uses add_theme_support() To add support for automatic feed links, post
  * formats, and post thumbnails.
  * @uses register_nav_menu() To add support for a navigation menu.
@@ -17,7 +16,7 @@
  */
 function lebret_setup() {
 
-	load_theme_textdomain( 'lebret', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'lebret', get_template_directory() . '/assets/lang' );
 
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
@@ -30,21 +29,9 @@ function lebret_setup() {
 	register_nav_menu( 'primary', __( 'Navigation Menu', 'lebret' ) );
 	register_nav_menu( 'secondary', __( 'Secondary Menu', 'lebret' ) );
 
-	if ( ! isset( $content_width ) ) $content_width = 896;
+	if ( ! isset( $content_width ) ) $content_width = 960;
 }
 add_action( 'after_setup_theme', 'lebret_setup' );
-
-
-/**
- * Load Open Sans Font
- *
- * @since    1.0
- */
-function lebret_custom_header_fonts() {
-
-	//wp_enqueue_style( 'lebret-fonts', '//fonts.googleapis.com/css?family=Open+Sans:300,700', array(), null );
-}
-add_action( 'admin_print_styles-appearance_page_custom-header', 'lebret_custom_header_fonts' );
 
 
 /**
@@ -109,6 +96,11 @@ function lebret_scripts() {
 add_action( 'wp_enqueue_scripts', 'lebret_scripts' );
 
 
+/**
+ * Load Posts using Ajax
+ *
+ * @since    1.0
+ */
 function lebret_load_posts_callback() {
 
 	$offset = ( isset( $_POST['offset'] ) && '' != $_POST['offset'] ? (int) $_POST['offset'] : null );
@@ -154,8 +146,9 @@ function lebret_load_posts_callback() {
 add_action( 'wp_ajax_load_posts', 'lebret_load_posts_callback' );
 add_action( 'wp_ajax_nopriv_load_posts', 'lebret_load_posts_callback' );
 
+
 /**
- * Displays De Guiche Menus.
+ * Displays Lebret Menus.
  *
  * @since    1.0
  */
@@ -239,9 +232,6 @@ function lebret_get_sidebar_archives() {
 
 	global $wpdb, $wp_locale;
 
-	$where = apply_filters( 'getarchives_where', "WHERE post_type = 'post' AND post_status = 'publish'", $r );
-	$join = apply_filters( 'getarchives_join', '', $r );
-
 	$output = '';
 
 	$last_changed = wp_cache_get( 'last_changed', 'posts' );
@@ -250,8 +240,7 @@ function lebret_get_sidebar_archives() {
 		wp_cache_set( 'last_changed', $last_changed, 'posts' );
 	}
 
-	
-	$query = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, count(ID) as posts FROM $wpdb->posts $join $where GROUP BY YEAR(post_date), MONTH(post_date) ORDER BY post_date $order $limit";
+	$query = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, count(ID) as posts FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'publish' GROUP BY YEAR(post_date), MONTH(post_date) ORDER BY post_date DESC";
 	$key = md5( $query );
 	$key = "wp_get_archives:$key:$last_changed";
 	if ( ! $results = wp_cache_get( $key, 'posts' ) ) {
@@ -262,7 +251,7 @@ function lebret_get_sidebar_archives() {
 		foreach ( (array) $results as $result ) {
 			$url = get_month_link( $result->year, $result->month );
 			/* translators: 1: month name, 2: 4-digit year */
-			$text = sprintf( __( '%1$s %2$d' ), $wp_locale->get_month_abbrev( $wp_locale->get_month( $result->month ) ), $result->year );
+			$text = sprintf( __( '%1$s %2$d', 'lebret' ), $wp_locale->get_month_abbrev( $wp_locale->get_month( $result->month ) ), $result->year );
 			$output .= get_archives_link( $url, $text, 'html', '', '' );
 		}
 	}
@@ -295,7 +284,7 @@ function lebret_get_excerpt( $length = 30, $content = null ) {
 	$text = apply_filters( 'the_content', $text );
 	
 	$excerpt_length = (int) $length;
-	$excerpt_more   = '…';
+	$excerpt_more   = '&hellip;';
 	$text           = wp_trim_words( $text, $excerpt_length, $excerpt_more );
 
 	return $text;
@@ -418,7 +407,7 @@ endforeach;  ?>
 */
 function lebret_post_nav() {
 
-	global $post;
+	/*global $post;
 
 	// Don't print empty markup if there's nowhere to navigate.
 	$previous = ( is_attachment() ) ? get_post( $post->post_parent ) : get_adjacent_post( false, '', true );
@@ -435,6 +424,7 @@ function lebret_post_nav() {
 					<div style="clear:both"></div>
 				</div>
 <?php
+	*/
 }
 
 
@@ -460,7 +450,7 @@ function lebret_tags( $limit = 4 ) {
 		}
 
 		if ( 0 < $limit )
-			$html .= '<li class="post-tag"><span><a href="#post-tags">…</a></span></li>';
+			$html .= '<li class="post-tag"><span><a href="#post-tags">&hellip;</a></span></li>';
 
 		$html .= '</ul></div>';
 	}

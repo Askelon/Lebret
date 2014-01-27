@@ -1,37 +1,50 @@
 <?php get_header(); ?>
 
-		<div id="main" class="ui grid segment">
+<?php get_sidebar(); ?>
 
-			<aside id="blog-menu" class="ui three wide column justified">
-<?php deguiche_menu( 'secondary' ); ?>
-			</aside>
-
-			<section id="content" class="ui eight wide column justified">
-<?php
-if ( have_posts() ) : while ( have_posts() ) : the_post();
-?>
-				<article <?php post_class( 'ui piled segment' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
-					<header class="post-header">
-						<div class="post-thumbnail"><?php the_post_thumbnail( 'large' ) ?></div>
-					</header>
-					<div class="post-meta">
-						<div class="ui basic left floated segment"><?php the_date() ?></div>
-						<div class="ui basic right floated segment"><a href="<?php echo get_comments_link() ?>"><?php _e( 'Leave a comment', 'deguiche' ) ?></a></div>
+		<section id="main" class="content ui thirteen wide column">
+			<div class="ui column justified aligned stackable grid">
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+				<article id="post-<?php the_ID() ?>" <?php post_class( 'ui eleven wide column' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
+					<div class="entry-terms">
+						<?php lebret_tags( 2 ) ?>
 					</div>
-					<div class="post-content" itemprop="articleBody">
+<?php if ( has_post_thumbnail() ) : ?>
+					<div class="post-thumbnail"><?php the_post_thumbnail( 'large' ) ?></div>
+<?php else : ?>
+					<div class="post-no-thumbnail"></div>
+<?php endif; ?>
+					<header class="entry-header">
+						<div class="entry-meta"><span class="entry-categories"><?php the_category( ', ' ) ?></span></div>
+						<h5 class="entry-title" itemprop="headline">
+							<?php the_title() ?>
+						</h5>
+						<div class="entry-meta">
+							<span class="meta entry-date"><a href="<?php the_permalink() ?>" class="item item-date" title="<?php the_time('j F Y') ?>"><i class="calendar icon"></i> <?php the_date('j F Y') ?></a></span>
+							<span class="meta entry-author"><a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" class="item item-author" title="<?php the_author_meta( 'display_name' ); ?>"><i class="user icon"></i> <?php the_author_meta( 'display_name' ); ?></a></span>
+							<span class="meta entry-comments"><?php comments_popup_link( '<i class="comment icon"></i> 0 commentaire', '<i class="comment icon"></i> 1 commentaire', '<i class="comment icon"></i> % commentaires', 'item item-comments' ); ?></span>
+							<span class="meta entry-edit"><?php edit_post_link( '<i class="edit icon"></i> ' . __( 'Edit', 'lebret' ) ); ?></span>
+						</div>
+					</header>
+					<div class="entry-content" itemprop="articleBody">
 						<?php the_content(); ?>
 					</div>
-					<footer class="post-footer">
-						
-					</footer>
-				</article>
-<?php endwhile; endif; ?>
-			</section><!-- /#content-->
 
-<?php get_sidebar(); ?>
+					<?php wp_link_pages(); ?> 
+				</article>
+
+				<?php lebret_post_nav() ?>
+
+				<article id="post-comments" class="ui eleven wide column" role="comment" itemscope itemtype="http://schema.org/Article">
+					<?php comments_template() ?>
+				</article>
+
+<?php endwhile; endif; ?>
 
 <?php get_sidebar('second'); ?>
 
-		</div>
+			</div>
 
-<?php get_footer(); ?>
+		</section><!-- /#main-->
+
+<?php get_footer() ?>

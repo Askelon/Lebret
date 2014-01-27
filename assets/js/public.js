@@ -4,6 +4,7 @@ jQuery(window).load(function() {
 			gutter: 10,
 			itemSelector: '.hentry'
 		});
+
 		jQuery('.pagination.menu').hide();
 		jQuery('#loadmore').css({display: 'inline-block'});
 		jQuery('#loadmore').click(function(e) {
@@ -28,4 +29,14 @@ jQuery(window).load(function() {
 			});
 		});
 	}
+
+	jQuery('#toggle-search').click(function(e) {
+		e.preventDefault();
+		jQuery('#nav-search').show();
+	});
+
+	jQuery('body, html').keydown(function(e) {
+		if ( e.which == 27 && jQuery('#nav-search').css('display') != 'none' )
+			jQuery('#nav-search').hide();
+	});
 });

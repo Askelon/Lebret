@@ -8,15 +8,15 @@
 class Lebret_Widget_Archives extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array('classname' => 'widget_archive', 'description' => __( 'A monthly archive of your site&#8217;s Posts.') );
-		parent::__construct('archives', __('Archives'), $widget_ops);
+		$widget_ops = array( 'classname' => 'widget_archive', 'description' => __( 'A monthly archive of your site&#8217;s Posts.', 'lebret' ) );
+		parent::__construct( 'archives', __( 'Archives', 'lebret' ), $widget_ops );
 	}
 
 	function widget( $args, $instance ) {
 		extract($args);
 		$c = ! empty( $instance['count'] ) ? '1' : '0';
 		$d = ! empty( $instance['dropdown'] ) ? '1' : '0';
-		$title = apply_filters('widget_title', empty($instance['title']) ? __('Archives') : $instance['title'], $instance, $this->id_base);
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Archives', 'lebret' ) : $instance['title'], $instance, $this->id_base );
 
 		echo $before_widget;
 		if ( $title )
@@ -24,12 +24,12 @@ class Lebret_Widget_Archives extends WP_Widget {
 
 		if ( $d ) {
 ?>
-		<select name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value=""><?php echo esc_attr(__('Select Month')); ?></option> <?php wp_get_archives(apply_filters('widget_archives_dropdown_args', array('type' => 'monthly', 'format' => 'option', 'show_post_count' => $c))); ?> </select>
+		<select name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value=""><?php echo esc_attr( __( 'Select Month', 'lebret' ) ); ?></option> <?php wp_get_archives(apply_filters( 'widget_archives_dropdown_args', array( 'type' => 'monthly', 'format' => 'option', 'show_post_count' => $c ) ) ); ?> </select>
 <?php
 		} else {
 ?>
 		<ul>
-		<?php wp_get_archives(apply_filters('widget_archives_args', array('type' => 'monthly', 'show_post_count' => $c))); ?>
+		<?php wp_get_archives(apply_filters( 'widget_archives_args', array( 'type' => 'monthly', 'show_post_count' => $c ) ) ); ?>
 		</ul>
 <?php
 		}
@@ -39,8 +39,8 @@ class Lebret_Widget_Archives extends WP_Widget {
 
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
-		$new_instance = wp_parse_args( (array) $new_instance, array( 'title' => '', 'count' => 0, 'dropdown' => '') );
-		$instance['title'] = strip_tags($new_instance['title']);
+		$new_instance = wp_parse_args( (array) $new_instance, array( 'title' => '', 'count' => 0, 'dropdown' => '' ) );
+		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['count'] = $new_instance['count'] ? 1 : 0;
 		$instance['dropdown'] = $new_instance['dropdown'] ? 1 : 0;
 
@@ -48,16 +48,16 @@ class Lebret_Widget_Archives extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 0, 'dropdown' => '') );
-		$title = strip_tags($instance['title']);
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 0, 'dropdown' => '' ) );
+		$title = strip_tags( $instance['title'] );
 		$count = $instance['count'] ? 'checked="checked"' : '';
 		$dropdown = $instance['dropdown'] ? 'checked="checked"' : '';
 ?>
-		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></p>
+		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'lebret' ); ?></label> <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p>
 		<p>
-			<input class="checkbox" type="checkbox" <?php echo $dropdown; ?> id="<?php echo $this->get_field_id('dropdown'); ?>" name="<?php echo $this->get_field_name('dropdown'); ?>" /> <label for="<?php echo $this->get_field_id('dropdown'); ?>"><?php _e('Display as dropdown'); ?></label>
+			<input class="checkbox" type="checkbox" <?php echo $dropdown; ?> id="<?php echo $this->get_field_id( 'dropdown' ); ?>" name="<?php echo $this->get_field_name( 'dropdown' ); ?>" /> <label for="<?php echo $this->get_field_id( 'dropdown' ); ?>"><?php _e( 'Display as dropdown', 'lebret' ); ?></label>
 			<br/>
-			<input class="checkbox" type="checkbox" <?php echo $count; ?> id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" /> <label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Show post counts'); ?></label>
+			<input class="checkbox" type="checkbox" <?php echo $count; ?> id="<?php echo $this->get_field_id( 'count' ); ?>" name="<?php echo $this->get_field_name( 'count' ); ?>" /> <label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Show post counts', 'lebret' ); ?></label>
 		</p>
 <?php
 	}
@@ -71,17 +71,17 @@ class Lebret_Widget_Archives extends WP_Widget {
 class Lebret_Widget_Recent_Posts extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array('classname' => 'widget_recent_entries', 'description' => __( "Your site&#8217;s most recent Posts.") );
-		parent::__construct('recent-posts', __('Recent Posts'), $widget_ops);
+		$widget_ops = array( 'classname' => 'widget_recent_entries', 'description' => __( "Your site&#8217;s most recent Posts.", 'lebret' ) );
+		parent::__construct( 'recent-posts', __( 'Recent Posts', 'lebret' ), $widget_ops );
 		$this->alt_option_name = 'widget_recent_entries';
 
-		add_action( 'save_post', array($this, 'flush_widget_cache') );
-		add_action( 'deleted_post', array($this, 'flush_widget_cache') );
-		add_action( 'switch_theme', array($this, 'flush_widget_cache') );
+		add_action( 'save_post', array($this, 'flush_widget_cache' ) );
+		add_action( 'deleted_post', array($this, 'flush_widget_cache' ) );
+		add_action( 'switch_theme', array($this, 'flush_widget_cache' ) );
 	}
 
 	function widget($args, $instance) {
-		$cache = wp_cache_get('widget_recent_posts', 'widget');
+		$cache = wp_cache_get( 'widget_recent_posts', 'widget' );
 
 		if ( !is_array($cache) )
 			$cache = array();
@@ -97,7 +97,7 @@ class Lebret_Widget_Recent_Posts extends WP_Widget {
 		ob_start();
 		extract($args);
 
-		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Recent Posts' );
+		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Recent Posts', 'lebret' );
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 		$number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 10;
 		if ( ! $number )
@@ -125,12 +125,12 @@ class Lebret_Widget_Recent_Posts extends WP_Widget {
 		<?php while ( $r->have_posts() ) : $r->the_post(); ?>
 			<div class="item">
 <?php if ( has_post_thumbnail() ) : ?>
-				<?php echo get_the_post_thumbnail( $r->ID, array( 32, 32 ), array( 'class' => "ui avatar attachment" ) ) ?>
+				<?php echo get_the_post_thumbnail( get_the_ID(), array( 32, 32 ), array( 'class' => "ui avatar attachment" ) ) ?>
 <?php else : ?>
 				<i class="square inverted text file icon"></i>
 <?php endif; ?>
 				<div class="content">
-					<?php if ( $show_date ) : ?><span class="post-date"><?php echo get_the_date('j M. Y'); ?></span> <?php endif; ?><a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : the_ID(); ?></a>
+					<?php if ( $show_date ) : ?><span class="post-date"><?php echo get_the_date( 'j M. Y' ); ?></span> <?php endif; ?><a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : the_ID(); ?></a>
 				</div>
 			</div>
 		<?php endwhile; ?>
@@ -143,7 +143,7 @@ class Lebret_Widget_Recent_Posts extends WP_Widget {
 		endif;
 
 		$cache[$args['widget_id']] = ob_get_flush();
-		wp_cache_set('widget_recent_posts', $cache, 'widget');
+		wp_cache_set( 'widget_recent_posts', $cache, 'widget' );
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -155,13 +155,13 @@ class Lebret_Widget_Recent_Posts extends WP_Widget {
 
 		$alloptions = wp_cache_get( 'alloptions', 'options' );
 		if ( isset($alloptions['widget_recent_entries']) )
-			delete_option('widget_recent_entries');
+			delete_option( 'widget_recent_entries' );
 
 		return $instance;
 	}
 
 	function flush_widget_cache() {
-		wp_cache_delete('widget_recent_posts', 'widget');
+		wp_cache_delete( 'widget_recent_posts', 'widget' );
 	}
 
 	function form( $instance ) {
@@ -169,14 +169,14 @@ class Lebret_Widget_Recent_Posts extends WP_Widget {
 		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$show_date = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : false;
 ?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'lebret' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:' ); ?></label>
+		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', 'lebret' ); ?></label>
 		<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
 
 		<p><input class="checkbox" type="checkbox" <?php checked( $show_date ); ?> id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?' ); ?></label></p>
+		<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?', 'lebret' ); ?></label></p>
 <?php
 	}
 }
@@ -189,16 +189,16 @@ class Lebret_Widget_Recent_Posts extends WP_Widget {
 class Lebret_Widget_Recent_Comments extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array('classname' => 'widget_recent_comments', 'description' => __( 'Your site&#8217;s most recent comments.' ) );
-		parent::__construct('recent-comments', __('Recent Comments'), $widget_ops);
+		$widget_ops = array( 'classname' => 'widget_recent_comments', 'description' => __( 'Your site&#8217;s most recent comments.', 'lebret' ) );
+		parent::__construct( 'recent-comments', __( 'Recent Comments', 'lebret' ), $widget_ops);
 		$this->alt_option_name = 'widget_recent_comments';
 
 		if ( is_active_widget(false, false, $this->id_base) )
-			add_action( 'wp_head', array($this, 'recent_comments_style') );
+			add_action( 'wp_head', array($this, 'recent_comments_style' ) );
 
-		add_action( 'comment_post', array($this, 'flush_widget_cache') );
-		add_action( 'edit_comment', array($this, 'flush_widget_cache') );
-		add_action( 'transition_comment_status', array($this, 'flush_widget_cache') );
+		add_action( 'comment_post', array($this, 'flush_widget_cache' ) );
+		add_action( 'edit_comment', array($this, 'flush_widget_cache' ) );
+		add_action( 'transition_comment_status', array($this, 'flush_widget_cache' ) );
 	}
 
 	function recent_comments_style() {
@@ -211,13 +211,13 @@ class Lebret_Widget_Recent_Comments extends WP_Widget {
 	}
 
 	function flush_widget_cache() {
-		wp_cache_delete('widget_recent_comments', 'widget');
+		wp_cache_delete( 'widget_recent_comments', 'widget' );
 	}
 
 	function widget( $args, $instance ) {
 		global $comments, $comment;
 
-		$cache = wp_cache_get('widget_recent_comments', 'widget');
+		$cache = wp_cache_get( 'widget_recent_comments', 'widget' );
 
 		if ( ! is_array( $cache ) )
 			$cache = array();
@@ -233,7 +233,7 @@ class Lebret_Widget_Recent_Comments extends WP_Widget {
  		extract($args, EXTR_SKIP);
  		$output = '';
 
-		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Recent Comments' );
+		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Recent Comments', 'lebret' );
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 		$number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
 		if ( ! $number )
@@ -256,7 +256,7 @@ class Lebret_Widget_Recent_Comments extends WP_Widget {
 					$output .= get_avatar( $comment->comment_author_email, 32 );
 				$output .=  '<div class="content">';
 				/* translators: comments widget: 1: comment author, 2: post link */
-				$output .= sprintf( _x( '%1$s on %2$s', 'widgets' ), get_comment_author_link(), '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>');
+				$output .= sprintf( _x( '%1$s on %2$s', 'widgets' ), get_comment_author_link(), '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>' );
 				$output .= '</div></div>';
 			}
  		}
@@ -265,7 +265,7 @@ class Lebret_Widget_Recent_Comments extends WP_Widget {
 
 		echo $output;
 		$cache[$args['widget_id']] = $output;
-		wp_cache_set('widget_recent_comments', $cache, 'widget');
+		wp_cache_set( 'widget_recent_comments', $cache, 'widget' );
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -276,7 +276,7 @@ class Lebret_Widget_Recent_Comments extends WP_Widget {
 
 		$alloptions = wp_cache_get( 'alloptions', 'options' );
 		if ( isset($alloptions['widget_recent_comments']) )
-			delete_option('widget_recent_comments');
+			delete_option( 'widget_recent_comments' );
 
 		return $instance;
 	}
@@ -285,10 +285,10 @@ class Lebret_Widget_Recent_Comments extends WP_Widget {
 		$title  = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
 		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 ?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'lebret' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of comments to show:' ); ?></label>
+		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of comments to show:', 'lebret' ); ?></label>
 		<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
 <?php
 	}
@@ -305,14 +305,14 @@ class Lebret_Widget_Recent_Comments extends WP_Widget {
 class Lebret_Widget_Categories extends WP_Widget {
 
         function __construct() {
-                $widget_ops = array( 'classname' => 'lebret_widget_categories', 'description' => __( "A list or dropdown of categories. This is a copy of the Categories Widget, Lebret styled." ) );
-                parent::__construct('lebret_categories', __('Lebret Categories'), $widget_ops);
+                $widget_ops = array( 'classname' => 'lebret_widget_categories', 'description' => __( "A list or dropdown of categories. This is a copy of the Categories Widget, Lebret styled.", 'lebret' ) );
+                parent::__construct( 'lebret_categories', __( 'Lebret Categories', 'lebret' ), $widget_ops);
         }
 
         function widget( $args, $instance ) {
                 extract( $args );
 
-                $title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Categories' ) : $instance['title'], $instance, $this->id_base);
+                $title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Categories', 'lebret' ) : $instance['title'], $instance, $this->id_base);
                 $c = ! empty( $instance['count'] ) ? '1' : '0';
                 $h = ! empty( $instance['hierarchical'] ) ? '1' : '0';
                 $d = ! empty( $instance['dropdown'] ) ? '1' : '0';
@@ -321,11 +321,11 @@ class Lebret_Widget_Categories extends WP_Widget {
                 if ( $title )
                         echo "\n"."\t\t\t\t\t\t" . $before_title . $title . $after_title . "\n";
 
-                $cat_args = array('orderby' => 'name', 'show_count' => $c, 'hierarchical' => $h);
+                $cat_args = array( 'orderby' => 'name', 'show_count' => $c, 'hierarchical' => $h);
 
                 if ( $d ) {
-                        $cat_args['show_option_none'] = __('Select Category');
-                        wp_dropdown_categories(apply_filters('widget_categories_dropdown_args', $cat_args));
+                        $cat_args['show_option_none'] = __( 'Select Category', 'lebret' );
+                        wp_dropdown_categories(apply_filters( 'widget_categories_dropdown_args', $cat_args));
 ?>
 
 <script type='text/javascript'>
@@ -346,7 +346,7 @@ class Lebret_Widget_Categories extends WP_Widget {
 			$cat_args['title_li'] = '';
 			$cat_args['echo'] = 0;
 
-			$cats = get_categories(apply_filters('get_categories_taxonomy', 'category', $cat_args));
+			$cats = get_categories(apply_filters( 'get_categories_taxonomy', 'category', $cat_args));
 
 			if ( ! empty( $cats ) ) {
 
@@ -387,23 +387,23 @@ class Lebret_Widget_Categories extends WP_Widget {
 
         function form( $instance ) {
                 //Defaults
-                $instance = wp_parse_args( (array) $instance, array( 'title' => '') );
+                $instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
                 $title = esc_attr( $instance['title'] );
                 $count = isset($instance['count']) ? (bool) $instance['count'] :false;
                 $hierarchical = isset( $instance['hierarchical'] ) ? (bool) $instance['hierarchical'] : false;
                 $dropdown = isset( $instance['dropdown'] ) ? (bool) $instance['dropdown'] : false;
 ?>
-                <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:' ); ?></label>
-                <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
+                <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'lebret' ); ?></label>
+                <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-                <p><input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('dropdown'); ?>" name="<?php echo $this->get_field_name('dropdown'); ?>"<?php checked( $dropdown ); ?> />
-                <label for="<?php echo $this->get_field_id('dropdown'); ?>"><?php _e( 'Display as dropdown' ); ?></label><br />
+                <p><input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id( 'dropdown' ); ?>" name="<?php echo $this->get_field_name( 'dropdown' ); ?>"<?php checked( $dropdown ); ?> />
+                <label for="<?php echo $this->get_field_id( 'dropdown' ); ?>"><?php _e( 'Display as dropdown', 'lebret' ); ?></label><br />
 
-                <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>"<?php checked( $count ); ?> />
-                <label for="<?php echo $this->get_field_id('count'); ?>"><?php _e( 'Show post counts' ); ?></label><br />
+                <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id( 'count' ); ?>" name="<?php echo $this->get_field_name( 'count' ); ?>"<?php checked( $count ); ?> />
+                <label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Show post counts', 'lebret' ); ?></label><br />
 
-                <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('hierarchical'); ?>" name="<?php echo $this->get_field_name('hierarchical'); ?>"<?php checked( $hierarchical ); ?> />
-                <label for="<?php echo $this->get_field_id('hierarchical'); ?>"><?php _e( 'Show hierarchy' ); ?></label></p>
+                <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id( 'hierarchical' ); ?>" name="<?php echo $this->get_field_name( 'hierarchical' ); ?>"<?php checked( $hierarchical ); ?> />
+                <label for="<?php echo $this->get_field_id( 'hierarchical' ); ?>"><?php _e( 'Show hierarchy', 'lebret' ); ?></label></p>
 <?php
         }
 
@@ -418,8 +418,8 @@ class Lebret_Widget_Categories extends WP_Widget {
  class Lebret_Nav_Menu_Widget extends WP_Widget {
 
         function __construct() {
-                $widget_ops = array( 'description' => __('Add a custom menu to your sidebar.') );
-                parent::__construct( 'lebret_nav_menu', __('Lebret Custom Menu'), $widget_ops );
+                $widget_ops = array( 'description' => __( 'Add a custom menu to your sidebar.', 'lebret' ) );
+                parent::__construct( 'lebret_nav_menu', __( 'Lebret Custom Menu', 'lebret' ), $widget_ops );
         }
 
         function widget($args, $instance) {
@@ -437,22 +437,6 @@ class Lebret_Widget_Categories extends WP_Widget {
                         echo $args['before_title'] . $instance['title'] . $args['after_title'];
 
                 wp_nav_menu( array( 'fallback_cb' => '', 'menu' => $nav_menu ) );
-
-?>
-						<div class="ui secondary vertical pointing menu">
-							<a class="active item"><i class="users icon"></i> Friends</a>
-							<a class="item"><i class="mail icon"></i> Messages</a>
-							<a class="item"><i class="user icon"></i> Friends</a>
-							<div class="ui dropdown item">
-							    More <i class="dropdown icon"></i>
-							    <div class="menu">
-								    <a class="item"><i class="edit icon"></i> Edit Profile</a>
-								    <a class="item"><i class="globe icon"></i> Choose Language</a>
-								    <a class="item"><i class="settings icon"></i> Account Settings</a>
-							    </div>
-							</div>
-						</div>
-<?php
 
                 echo $args['after_widget'];
         }
@@ -472,17 +456,17 @@ class Lebret_Widget_Categories extends WP_Widget {
 
                 // If no menus exists, direct the user to go and create some.
                 if ( !$menus ) {
-                        echo '<p>'. sprintf( __('No menus have been created yet. <a href="%s">Create some</a>.'), admin_url('nav-menus.php') ) .'</p>';
+                        echo '<p>'. sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.', 'lebret' ), admin_url( 'nav-menus.php' ) ) .'</p>';
                         return;
                 }
                 ?>
                 <p>
-                        <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:') ?></label>
-                        <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
+                        <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'lebret' ) ?></label>
+                        <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" />
                 </p>
                 <p>
-                        <label for="<?php echo $this->get_field_id('nav_menu'); ?>"><?php _e('Select Menu:'); ?></label>
-                        <select id="<?php echo $this->get_field_id('nav_menu'); ?>" name="<?php echo $this->get_field_name('nav_menu'); ?>">
+                        <label for="<?php echo $this->get_field_id( 'nav_menu' ); ?>"><?php _e( 'Select Menu:', 'lebret' ); ?></label>
+                        <select id="<?php echo $this->get_field_id( 'nav_menu' ); ?>" name="<?php echo $this->get_field_name( 'nav_menu' ); ?>">
                 <?php
                         foreach ( $menus as $menu ) {
                                 echo '<option value="' . $menu->term_id . '"'

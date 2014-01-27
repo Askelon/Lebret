@@ -11,41 +11,6 @@ Tags: light, dark, two-columns, three-columns, left-sidebar, right-sidebar, fixe
 Text Domain: lebret
 */
 
-/**
- * Table of Contents:
- *
- * 1.0 - Reset
- * 2.0 - Repeatable Patterns
- * 3.0 - Basic Structure
- * 4.0 - Header
- * 5.0 - Navigation
- * 6.0 - Content
- *   6.1 - Post Thumbnail
- *   6.2 - Entry Header
- *   6.3 - Entry Meta
- *   6.4 - Entry Content
- *   6.5 - Entry Footer
- *   6.7 - Galleries
- *   6.8 - Post Formats
- *   6.9 - Post/Image/Paging Navigation
- *   6.10 - Attachments
- *   6.11 - Archives
- *   6.12 - Contributor Page
- *   6.13 - 404 Page
- *   6.14 - Full-width
- *   6.15 - Singular
- *   6.16 - Comments
- * 7.0 - Sidebar
- *   7.1 - Widgets
- *   7.2 - Content Sidebar Widgets
- * 8.0 - Footer
- * 9.0 - Featured Content
- * 10.0 - Multisite
- * 11.0 - Media Queries
- * 12.0 - Print
- * -----------------------------------------------------------------------------
- */
-
 
 /**
  * 1.0 Reset
@@ -816,8 +781,13 @@ span + .edit-link:before,
 	position: relative;
 }
 
-.site.single {
+.site.single,
+.site.page {
 	background-color: #1b1b1b;
+}
+
+.site.page {
+	padding: 0 !important;
 }
 
 
@@ -863,7 +833,9 @@ span + .edit-link:before,
 	text-transform: uppercase;
 }
 
-.home .site-title {
+.home .site-title,
+.search .site-title,
+.archive .site-title {
 	padding-top: 0.75em;
 }
 
@@ -884,7 +856,7 @@ span + .edit-link:before,
 /* Search in the header */
 
 #nav-search {
-	background: rgba(255, 255, 255, 0.95);
+	background: #f5f5f5;
 	display: none;
 	height: 5.25em;
 	position: absolute;
@@ -933,6 +905,7 @@ span + .edit-link:before,
 	background: #F5F5F5;
 	border-radius: 0;
 	margin: 0;
+	min-height: 2.5rem;
 }
 
 #nav-secondary-menu .menu {
@@ -992,28 +965,6 @@ span + .edit-link:before,
 .main-content .hentry {
 	box-shadow: 0 0 0;
 }
-
-/*.hentry:before {
-	border: 4em solid rgba(0, 0, 0, 0);
-	border-right-color: rgba(0, 0, 0, 0.5);
-	content: ' ';
-	right: 0;
-	position: absolute;
-	top: -4em;
-	z-index: 1;
-}
-
-.hentry:after {
-	color: rgba(255, 255, 255, 0.5);
-	content: '+';
-	font-family: serif;
-	font-size: 2em;
-	font-weight: 300;
-	right: 0.25em;
-	position: absolute;
-	top: -0.1em;
-	z-index: 1;
-}*/
 
 
 /**
@@ -1103,6 +1054,10 @@ a.post-thumbnail:hover {
 	width: 100%;
 }
 
+.post-no-thumbnail {
+	height: 8em;
+}
+
 
 /**
  * 6.2 Entry Header
@@ -1115,7 +1070,8 @@ a.post-thumbnail:hover {
 	z-index: 1;
 }
 
-.single .entry-header {
+.single .entry-header,
+.page .entry-header {
 	background: #fff;
 	margin: -3rem auto 1rem auto;
 	width: 75%;
@@ -1166,7 +1122,8 @@ a.post-thumbnail:hover {
 	
 }
 
-.single .entry-content {
+.single .entry-content,
+.page .entry-content {
 	margin: 1rem auto;
 	width: 75%;
 }
@@ -1422,6 +1379,156 @@ a.post-thumbnail:hover {
 }
 
 
+/**
+ * 6.9 Gallery
+ * -----------------------------------------------------------------------------
+ */
+
+.gallery {
+	margin-bottom: 20px;
+}
+
+.gallery-item {
+	float: left;
+	margin: 0 4px 4px 0;
+	overflow: hidden;
+	position: relative;
+}
+
+.gallery-columns-1 .gallery-item {
+	max-width: 100%;
+}
+
+.gallery-columns-2 .gallery-item {
+	max-width: 48%;
+	max-width: -webkit-calc(50% - 4px);
+	max-width:         calc(50% - 4px);
+}
+
+.gallery-columns-3 .gallery-item {
+	max-width: 32%;
+	max-width: -webkit-calc(33.3% - 4px);
+	max-width:         calc(33.3% - 4px);
+}
+
+.gallery-columns-4 .gallery-item {
+	max-width: 23%;
+	max-width: -webkit-calc(25% - 4px);
+	max-width:         calc(25% - 4px);
+}
+
+.gallery-columns-5 .gallery-item {
+	max-width: 19%;
+	max-width: -webkit-calc(20% - 4px);
+	max-width:         calc(20% - 4px);
+}
+
+.gallery-columns-6 .gallery-item {
+	max-width: 15%;
+	max-width: -webkit-calc(16.7% - 4px);
+	max-width:         calc(16.7% - 4px);
+}
+
+.gallery-columns-7 .gallery-item {
+	max-width: 13%;
+	max-width: -webkit-calc(14.28% - 4px);
+	max-width:         calc(14.28% - 4px);
+}
+
+.gallery-columns-8 .gallery-item {
+	max-width: 11%;
+	max-width: -webkit-calc(12.5% - 4px);
+	max-width:         calc(12.5% - 4px);
+}
+
+.gallery-columns-9 .gallery-item {
+	max-width: 9%;
+	max-width: -webkit-calc(11.1% - 4px);
+	max-width:         calc(11.1% - 4px);
+}
+
+.gallery-columns-1 .gallery-item:nth-of-type(1n),
+.gallery-columns-2 .gallery-item:nth-of-type(2n),
+.gallery-columns-3 .gallery-item:nth-of-type(3n),
+.gallery-columns-4 .gallery-item:nth-of-type(4n),
+.gallery-columns-5 .gallery-item:nth-of-type(5n),
+.gallery-columns-6 .gallery-item:nth-of-type(6n),
+.gallery-columns-7 .gallery-item:nth-of-type(7n),
+.gallery-columns-8 .gallery-item:nth-of-type(8n),
+.gallery-columns-9 .gallery-item:nth-of-type(9n) {
+	margin-right: 0;
+}
+
+.gallery-caption {
+	background-color: rgba(0, 0, 0, 0.7);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:    border-box;
+	box-sizing:         border-box;
+	color: #fff;
+	font-size: 12px;
+	line-height: 1.5;
+	margin: 0;
+	max-height: 50%;
+	opacity: 0;
+	padding: 6px 8px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	text-align: left;
+	width: 100%;
+}
+
+.gallery-caption:before {
+	content: "";
+	height: 100%;
+	min-height: 49px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.gallery-item:hover .gallery-caption {
+	opacity: 1;
+}
+
+.gallery-columns-7 .gallery-caption,
+.gallery-columns-8 .gallery-caption,
+.gallery-columns-9 .gallery-caption {
+	display: none;
+}
+
+
+/**
+ * 6.10 Post Formats
+ * -----------------------------------------------------------------------------
+ */
+
+.format-aside .entry-content,
+.format-aside .entry-summary,
+.format-quote .entry-content,
+.format-quote .entry-summary,
+.format-link .entry-content,
+.format-link .entry-summary {
+	padding-top: 0;
+}
+
+.site-content .format-link .entry-title,
+.site-content .format-aside .entry-title,
+.site-content .format-quote .entry-title {
+	display: none;
+}
+
+
+/**
+ * 6.10 Sticky & Featured
+ * -----------------------------------------------------------------------------
+ */
+
+.sticky {
+}
+
+
 
 /**
  * 7.0 Sidebar
@@ -1444,7 +1551,9 @@ a.post-thumbnail:hover {
 	z-index: 10;
 }
 
-.home #sidebar {
+.home #sidebar,
+.search #sidebar,
+.archive #sidebar {
 	top: 7.2em;
 	border-top: 1.25em solid #F5F5F5 !important;
 }
@@ -1621,7 +1730,7 @@ a.post-thumbnail:hover {
 	margin: 0 !important;
 	max-width: 100%;
 	padding: 0 !important;
-	position: fixed;
+	position: absolute;
 	z-index: 10;
 }
 

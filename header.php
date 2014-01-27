@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html <?php language_attributes(); ?>>
 
 	<head>
 
@@ -32,11 +32,6 @@
 			<div id="nav-secondary-menu" class="ui inverted secondary menu divided grid">
 				<div class="left three wide column site-information">
 					<h1 class="site-title"><a href="<?php echo home_url('/') ?>"><?php bloginfo('name') ?></a></h1>
-				</div>
-				<div class="ui inverted right large menu">
-					<a href="" class="item"><i class="block layout icon"></i></a>
-					<a href="" class="item"><i class="grid layout icon"></i></a>
-					<a href="" class="item"><i class="list layout icon"></i></a>
 				</div>
 			</div>
 		</header>

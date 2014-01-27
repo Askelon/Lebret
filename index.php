@@ -9,13 +9,15 @@ $i = 0; $featured = true;
 if ( have_posts() ) : while ( have_posts() ) : the_post(); $i++;
 ?>
 				<article <?php post_class( 'column' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
+<?php if ( is_sticky() ) : ?>
+					<div class="ui left purple inverted corner label"><i class="star icon"></i></div>
+<?php endif; ?>
 					<header class="entry-header">
 <?php if ( has_post_thumbnail() ) : ?>
 						<div class="post-thumbnail"><?php the_post_thumbnail( 'medium' ) ?></div>
 <?php endif; ?>
 						<h5 class="entry-title" itemprop="headline">
 							<a href="<?php the_permalink() ?>" rel="bookmark"><?php the_title() ?></a>
-							<?php edit_post_link( '&#9998;', '<span class="edit-link entypo">', '</span>' ); ?>
 						</h5>
 					</header>
 <?php if ( $featured ) : ?>

@@ -32,11 +32,16 @@ jQuery(window).load(function() {
 
 	jQuery('#toggle-search').click(function(e) {
 		e.preventDefault();
-		jQuery('#nav-search').show();
+		jQuery('#nav-search, #search-bg').show();
 	});
 
 	jQuery('body, html').keydown(function(e) {
 		if ( e.which == 27 && jQuery('#nav-search').css('display') != 'none' )
-			jQuery('#nav-search').hide();
+			jQuery('#nav-search, #search-bg').hide();
+	});
+
+	jQuery('#search-close').click(function(e) {
+		e.preventDefault();
+		jQuery('#nav-search, #search-bg').hide();
 	});
 });

@@ -597,7 +597,7 @@ add_action( 'comment_form_before_fields', 'lebret_comment_before_fields' );
 function lebret_comment_form_after_fields() {
 ?>
 				</header>
-				<div class="comment-respond-avatar"><?php echo get_avatar( null, 74 ); ?></div>
+				<!--<div class="comment-respond-avatar"><?php echo get_avatar( null, 74 ); ?></div>-->
 <?php
 }
 add_action( 'comment_form_after_fields', 'lebret_comment_form_after_fields' );

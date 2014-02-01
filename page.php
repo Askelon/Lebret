@@ -4,9 +4,6 @@
 
 		<section id="main" class="content ui thirteen wide column">
 			<div class="ui column justified aligned stackable grid">
-
-<?php get_sidebar('second'); ?>
-
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 				<article id="post-<?php the_ID() ?>" <?php post_class( 'ui eleven wide column' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
 					<div class="entry-terms">
@@ -43,6 +40,9 @@
 				</article>
 
 <?php endwhile; endif; ?>
+
+<?php get_sidebar('second'); ?>
+
 			</div>
 
 		</section><!-- /#main-->

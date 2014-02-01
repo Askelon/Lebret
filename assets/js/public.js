@@ -1,5 +1,5 @@
 jQuery(window).load(function() {
-	if ( jQuery('.main-content > .grid').length ) {
+	if ( jQuery('.main-content > .grid').length && window.innerWidth > 780 ) {
 		jQuery('#main.main-content > .grid').masonry({
 			gutter: 10,
 			itemSelector: '.hentry'
@@ -27,6 +27,10 @@ jQuery(window).load(function() {
 					jQuery('#main .grid').masonry('reload');
 				}
 			});
+		});
+		
+		jQuery(window).resize(function() {
+			jQuery('#main.main-content > .grid').masonry('reload');
 		});
 	}
 

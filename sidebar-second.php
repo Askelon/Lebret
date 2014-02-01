@@ -7,11 +7,17 @@
 
 				<div id="sidebar-second-widgets">
 
+<?php
+global $post;
+if ( isset( $post->post_author ) && ! is_null( $post->post_author ) ) :
+	$author_id = $post->post_author;
+?>
 					<div id="about-author" class="about-author clear">
 						<h4 class="author-name"><?php _e( 'About the Author', 'lebret' ); ?></h4>
-						<?php echo get_avatar( get_the_author_meta( 'ID' ) ); ?>
-						<p class="author-description"><?php echo get_the_author_meta( 'description' ); ?></p>
+						<?php echo get_avatar( $author_id ); ?>
+						<p class="author-description"><?php echo get_the_author_meta( 'description', $author_id ); ?></p>
 					</div>
+<?php endif; ?>
 
 					<?php dynamic_sidebar( 'sidebar-second' ); ?>
 

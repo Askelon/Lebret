@@ -48,7 +48,7 @@ function lebret_widgets_init() {
 		'description'   => __( 'Appears on left', 'lebret' ),
 		'before_widget' => '<article id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</article>',
-		'before_title'  => '<h4 class="">',
+		'before_title'  => '<h4>',
 		'after_title'   => '</h4>',
 	) );
 	register_sidebar( array(
@@ -57,7 +57,7 @@ function lebret_widgets_init() {
 		'description'   => __( 'Appears in the right section of the Blog Posts View.', 'lebret' ),
 		'before_widget' => '<article id="%1$s" class="ui inverted segment widget %2$s">',
 		'after_widget'  => '</article>',
-		'before_title'  => '<h4 class="ui block widget-title">',
+		'before_title'  => '<h4 class="ui header black inverted widget-title">',
 		'after_title'   => '</h4>',
 	) );
 }
@@ -74,10 +74,12 @@ function lebret_scripts() {
 	wp_register_style( 'fonts', '//fonts.googleapis.com/css?family=Lato:100,200,300,400,900|Source+Sans+Pro:400,700', array(), false, 'all' );
 	wp_register_style( 'semantic', get_template_directory_uri() . '/assets/css/semantic.css', array(), false, 'all' );
 	wp_register_style( 'lebret', get_stylesheet_uri(), array(), false, 'all' );
+	wp_register_style( 'lebret-color', get_template_directory_uri() . '/assets/css/lebret-spring.css', array(), false, 'all' );
 
 	wp_enqueue_style( 'fonts' );
 	wp_enqueue_style( 'semantic' );
 	wp_enqueue_style( 'lebret' );
+	wp_enqueue_style( 'lebret-color' );
 
 	wp_register_script( 'lebret', get_template_directory_uri() . '/assets/js/public.js', array( 'jquery', 'jquery-masonry' ), false, true );
 	wp_register_script( 'semantic', get_template_directory_uri() . '/assets/js/semantic.js', array( 'jquery' ), false, true );

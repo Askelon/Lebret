@@ -13,7 +13,7 @@ if ( isset( $post->post_author ) && ! is_null( $post->post_author ) ) :
 	$author_id = $post->post_author;
 ?>
 					<div id="about-author" class="about-author clear">
-						<h4 class="author-name"><?php _e( 'About the Author', 'lebret' ); ?></h4>
+						<h4 class="ui header black inverted author-name"><?php _e( 'About the Author', 'lebret' ); ?></h4>
 						<?php echo get_avatar( $author_id ); ?>
 						<p class="author-description"><?php echo get_the_author_meta( 'description', $author_id ); ?></p>
 					</div>

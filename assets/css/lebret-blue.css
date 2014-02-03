@@ -1,0 +1,92 @@
+a {
+	color: #2790B0;
+}
+
+a:active,
+a:hover {
+	color: #1499D3;
+}
+
+.site {
+	background-color: #35404F;
+}
+
+.site-header {
+	background-color: #4D6684;
+}
+
+
+#nav-primary-menu a.item-home:hover {
+	background: #32B0E7;
+}
+
+.post-tags .post-tag:hover span {
+	border-bottom: 1px solid #1499D3;
+}
+
+.post-tags .post-tag:hover span::before {
+	border-right-color: #1499D3;
+}
+
+
+.main-content .hentry {
+	border-left-color: #35404F !important;
+	border-right-color: #35404F !important;
+}
+
+.hentry.sticky .label.featured {
+	border-color: #1499D3;
+}
+
+.hentry.sticky .label.featured i {
+	text-shadow: 0 1px 0 #044561;
+}
+
+
+
+#sidebar-second #about-author {
+	border-bottom: 0.25rem solid #1499D3;
+}
+
+::selection {
+	background: #1499D3 !important;
+}
+
+::-moz-selection {
+	background: #1499D3 !important;
+}
+
+button,
+.contributor-posts-link,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+#nav-primary-menu a.item-home,
+#comments .comments-title,
+#respond .comment-reply-title,
+#sidebar #sidebar-social-menu,
+#sidebar-second .widget-title,
+#sidebar-second #about-author .author-name,
+.post-tags .post-tag:hover span {
+	background: #1499D3 !important;
+}
+
+button:hover,
+button:focus,
+.contributor-posts-link:hover,
+input[type="button"]:hover,
+input[type="button"]:focus,
+input[type="reset"]:hover,
+input[type="reset"]:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+	background: #32B0E7
+}
+
+button:active,
+.contributor-posts-link:active,
+input[type="button"]:active,
+input[type="reset"]:active,
+input[type="submit"]:active {
+	background-color: #3791D7;
+}

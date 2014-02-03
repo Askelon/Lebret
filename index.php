@@ -10,11 +10,11 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); $i++;
 ?>
 				<article <?php post_class( 'column' ) ?> role="article" itemscope itemtype="http://schema.org/Article">
 <?php if ( is_sticky() ) : ?>
-					<div class="ui left purple inverted corner label"><i class="star icon"></i></div>
+					<div class="ui left inverted black corner label featured"><i class="star icon"></i></div>
 <?php endif; ?>
 					<header class="entry-header">
 <?php if ( has_post_thumbnail() ) : ?>
-						<div class="post-thumbnail"><?php the_post_thumbnail( 'medium' ) ?></div>
+						<div class="post-thumbnail"><?php the_post_thumbnail( 'large' ) ?></div>
 <?php endif; ?>
 						<h5 class="entry-title" itemprop="headline">
 							<a href="<?php the_permalink() ?>" rel="bookmark"><?php the_title() ?></a>

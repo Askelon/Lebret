@@ -26,9 +26,9 @@
 		<header class="ui sixteen column wide site-header">
 
 			<div id="nav-primary-menu" class="ui inverted menu grid">
-				<a href="http://blog.caercam.org/" class="ui one wide column active item item-home"><i class="home icon"></i> <span>Home</span></a>
-				<a href="http://www.caercam.org/" class="ui one wide column item item-corp"><i class="mail icon"></i> <span>Corp.</span></a>
-				<a href="http://charliemerland.me/" class="ui one wide column item item-me"><i class="user icon"></i> <span>.ME</span></a>
+				<a href="<?php echo home_url('/') ?>" class="ui one wide column active item item-home"><i class="home icon"></i> <span>Home</span></a>
+				<a href="http://www.caercam.org/" class="ui one wide column item item-corp"><i class="lab icon"></i> <span>Corp.</span></a>
+				<a href="http://charliemerland.me/" class="ui one wide column item item-me"><i class="coffee icon"></i> <span>.ME</span></a>
 				<a href="#" id="toggle-search" class="right ui one wide column item item-toggle-search"><i class="search big icon"></i></a>
 			</div>
 		</header>

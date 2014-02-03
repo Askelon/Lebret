@@ -79,7 +79,6 @@ body {
 }
 
 a {
-	color: #2790B0;
 	text-decoration: none;
 }
 
@@ -90,11 +89,6 @@ a:focus {
 a:hover,
 a:active {
 	outline: 0;
-}
-
-a:active,
-a:hover {
-	color: #1499D3;
 }
 
 h1,
@@ -426,13 +420,11 @@ hr {
  * to achieve a better experience. See http://core.trac.wordpress.org/ticket/25898.
  */
 ::selection {
-	background: #1499D3;
 	color: #fff;
 	text-shadow: none;
 }
 
 ::-moz-selection {
-	background: #1499D3;
 	color: #fff;
 	text-shadow: none;
 }
@@ -470,7 +462,6 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	background-color: #1499D3;
 	border: 0;
 	border-radius: 2px;
 	color: #fff;
@@ -490,7 +481,6 @@ input[type="reset"]:hover,
 input[type="reset"]:focus,
 input[type="submit"]:hover,
 input[type="submit"]:focus {
-	background-color: #32B0E7;
 	color: #fff;
 }
 
@@ -499,7 +489,6 @@ button:active,
 input[type="button"]:active,
 input[type="reset"]:active,
 input[type="submit"]:active {
-	background-color: #3791D7;
 }
 
 .search-field {
@@ -773,7 +762,6 @@ span + .edit-link:before,
  */
 
 .site {
-	background-color: #35404F;
 	font-family: Lato, Source Sans Pro, sans-serif;
 	font-weight: 300;
 	margin: 0 !important;
@@ -860,7 +848,6 @@ span + .edit-link:before,
 }
 
 .site-header {
-	background-color: #4D6684;
 	border-bottom: 0.85rem solid #fff;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 	margin: 0 !important;
@@ -918,14 +905,6 @@ span + .edit-link:before,
 	line-height: 1.6rem !important;
 	margin: 0 !important;
 	text-align: center;
-}
-
-#nav-primary-menu a.item-home {
-	background: #1499D3;
-}
-
-#nav-primary-menu a.item-home:hover {
-	background: #32B0E7;
 }
 
 #nav-secondary-menu {
@@ -1028,8 +1007,6 @@ span + .edit-link:before,
 }
 
 .post-tags .post-tag:hover span {
-	background: #1499D3;
-	border-bottom: 1px solid #1499D3;
 	position: relative;
 }
 
@@ -1039,7 +1016,6 @@ span + .edit-link:before,
 
 .post-tags .post-tag:hover span::before {
 	border: 12px solid rgba(0, 0, 0, 0);
-	border-right-color: #1499D3;
 	content: ' ';
 	position: absolute;
 	left: -24px;
@@ -1139,10 +1115,6 @@ a.post-thumbnail:hover {
 	text-transform: uppercase;
 }
 
-.entry-meta a:hover {
-	color: #1499D3;
-}
-
 
 /**
  * 6.4 Entry Content
@@ -1202,7 +1174,6 @@ a.post-thumbnail:hover {
 }
 
 #comments .comments-title {
-	background: #1499D3;
 	color: #fff;
 	font-family: Lato;
 	font-size: 1.25rem;
@@ -1248,19 +1219,24 @@ a.post-thumbnail:hover {
 #comments .avatar {
 	float: left;
 	height: auto;
-	margin: 0 1rem 0 0;
+	margin: 0 1rem 1rem -1.5rem;
 	max-width: 108px;
 	width: 12.5%;
 }
 
 #comments .comment-text {
 	min-height: 96px;
+	padding: 0 1.5rem;
 }
 
 #comments .comment-text p {
 	color: #ccc;
 	margin: 0 0 0.75rem 0;
 	padding: 0.75rem 1rem 0 1rem;
+}
+
+#comments .comment-text > * {
+	color: #ccc;
 }
 
 #comments .comment-footer {
@@ -1294,7 +1270,7 @@ a.post-thumbnail:hover {
 	width: 8.25%;
 }
 
-#comments .children .fn a {
+#comments .children .fn {
 	color: #eee;
 	font-weight: 400;
 }
@@ -1306,7 +1282,6 @@ a.post-thumbnail:hover {
 }
 
 #respond .comment-reply-title {
-	background: #1499D3;
 	color: #fff;
 	font-family: Lato;
 	font-size: 1.25rem;
@@ -1384,8 +1359,8 @@ a.post-thumbnail:hover {
 
 .main-content .hentry {
 	background: #F5F5F5;
-	border-left: 0.5em solid #35404F !important;
-	border-right: 0.5em solid #35404F !important;
+	border-left: 0.5em solid #fff !important;
+	border-right: 0.5em solid #fff !important;
 	margin-top: 0.75rem !important;
 	padding: 0 !important;
 	width: 33% !important;
@@ -1591,9 +1566,8 @@ a.post-thumbnail:hover {
  * -----------------------------------------------------------------------------
  */
 
-.sticky {
+.hentry.sticky .label.featured {
 }
-
 
 
 /**
@@ -1630,10 +1604,13 @@ a.post-thumbnail:hover {
 }
 
 #sidebar #sidebar-social-menu {
-	background: #1499D3;
 	border-radius: 0;
 	margin: 0;
 	overflow: hidden;
+}
+
+#sidebar #sidebar-social-menu .item i {
+	margin: 0;
 }
 
 #sidebar #sidebar-social-menu .item-facebook:hover {
@@ -1706,7 +1683,6 @@ a.post-thumbnail:hover {
 }
 
 #sidebar-second .widget-title {
-	background: #1499D3;
 	font-family: Lato;
 	font-size: 1rem;
 	font-weight: 300;
@@ -1771,11 +1747,10 @@ a.post-thumbnail:hover {
 
 #sidebar-second #about-author {
 	background: #f5f5f5;
-	border-bottom: 0.25rem solid #1499D3;
+	border-bottom: 0.25rem solid;
 }
 
 #sidebar-second #about-author .author-name {
-	background: #1499D3;
 	color: #fff;
 	font-family: Lato;
 	font-size: 1.25rem;
@@ -1937,8 +1912,8 @@ a.post-thumbnail:hover {
 	
 	.site > .content,
 	.site > .main-content {
-		margin-left: 30% !important;
-		width: 70% !important;
+		margin-left: 24% !important;
+		width: 76% !important;
 	}
 	
 	#nav-primary-menu .item {
@@ -1961,7 +1936,7 @@ a.post-thumbnail:hover {
 	}
 	
 	#sidebar {
-		width: 30% !important;
+		width: 24% !important;
 	}
 
 	#sidebar-social-menu .item {
@@ -2115,4 +2090,86 @@ a.post-thumbnail:hover {
 	#sidebar-second .widget {
 		width: 47%;
 	}
+}
+
+@media (max-width: 30em) {
+	
+	.post-thumbnail {
+		height: 14em;
+	}
+	
+	#respond .comment-form-label,
+	#comments .avatar,
+	#sidebar-second #about-author .avatar {
+		width: 20%;
+	}
+	
+	#respond .comment-form-input,
+	#respond .comment-form-comment,
+	#sidebar-second #about-author .author-description {
+		width: 80%;
+	}
+	
+	#respond .comment-form-comment {
+		margin: 0 0 0 20%;
+	}
+}
+
+@media (max-width: 24em) {
+	
+	#nav-primary-menu a {
+		font-size: 1rem !important;
+	}
+	
+	#sidebar-social-menu .item {
+		padding: 0.75rem;
+	}
+	
+	.post-thumbnail {
+		height: 14em;
+	}
+	
+	.entry-title {
+		font-size: 1.5rem;
+	}
+	
+	#comments .avatar {
+		width: 25%;
+	}
+	
+	#respond .comment-form-label,
+	#comments .avatar,
+	#sidebar-second #about-author .avatar {
+		width: 30%;
+	}
+	
+	#respond .comment-form-input,
+	#respond .comment-form-comment,
+	#sidebar-second #about-author .author-description {
+		width: 70%;
+	}
+	
+	#respond .comment-form-comment {
+		margin: 0 0 0 30%;
+	}
+	
+	#sidebar-second .widget {
+		width: 97%;
+	}
+}
+
+@media (max-width: 24em) {
+	
+	#nav-primary-menu a {
+		font-size: 0.75rem !important;
+	}
+	
+	#sidebar-social-menu .item {
+		padding: 0.5rem;
+	}
+	
+	.entry-title {
+		font-size: 1.5rem;
+	}
+	
 }

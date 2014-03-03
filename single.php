@@ -27,6 +27,7 @@
 						</div>
 					</header>
 					<div class="entry-content" itemprop="articleBody">
+						<?php lebret_old_posts_notice(); ?>
 						<?php the_content(); ?>
 					</div>
 

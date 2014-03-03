@@ -1055,6 +1055,7 @@ a.post-thumbnail:hover {
 	height: auto;
 	margin: 0 auto;
 	max-width: 100%;
+	min-height: 100%;
 	width: 100%;
 }
 
@@ -1632,6 +1633,7 @@ a.post-thumbnail:hover {
 #sidebar #sidebar-secondary-menu {
 	margin: 1rem 0 !important;
 	padding: 0 1.5rem;
+	max-width: 75%;
 }
 
 #sidebar #sidebar-secondary-menu .item {
@@ -1762,11 +1764,15 @@ a.post-thumbnail:hover {
 #sidebar-second #about-author .avatar {
 	float: left;
 	height: auto;
+	margin: 0 0.75rem 0 0;
 	width: 30%;
 }
 
 #sidebar-second #about-author .author-description {
-	width: 70%;
+	font-size: 0.9rem;
+	margin: 0;
+	padding: 0.5rem 5%;
+	width: 90%;
 }
 
 
@@ -2043,6 +2049,10 @@ a.post-thumbnail:hover {
 		overflow: visible !important;
 	}
 	
+	.site-header {
+		top: 0;
+	}
+	
 	.site > .content,
 	.site > .main-content {
 		margin: 0 !important;
@@ -2094,6 +2104,10 @@ a.post-thumbnail:hover {
 
 @media (max-width: 30em) {
 	
+	.site-header {
+		top: 0;
+	}
+	
 	.post-thumbnail {
 		height: 14em;
 	}
@@ -2116,6 +2130,10 @@ a.post-thumbnail:hover {
 }
 
 @media (max-width: 24em) {
+	
+	.site-header {
+		top: 0;
+	}
 	
 	#nav-primary-menu a {
 		font-size: 1rem !important;
@@ -2159,6 +2177,10 @@ a.post-thumbnail:hover {
 }
 
 @media (max-width: 24em) {
+	
+	.site-header {
+		top: 0;
+	}
 	
 	#nav-primary-menu a {
 		font-size: 0.75rem !important;

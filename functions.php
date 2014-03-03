@@ -74,12 +74,13 @@ function lebret_scripts() {
 	wp_register_style( 'fonts', '//fonts.googleapis.com/css?family=Lato:100,200,300,400,900|Source+Sans+Pro:400,700', array(), false, 'all' );
 	wp_register_style( 'semantic', get_template_directory_uri() . '/assets/css/semantic.css', array(), false, 'all' );
 	wp_register_style( 'lebret', get_stylesheet_uri(), array(), false, 'all' );
-	wp_register_style( 'lebret-color', get_template_directory_uri() . '/assets/css/lebret-spring.css', array(), false, 'all' );
+	wp_register_style( 'lebret-color', get_template_directory_uri() . '/assets/css/lebret-blue.css', array(), false, 'all' );
 
 	wp_enqueue_style( 'fonts' );
 	wp_enqueue_style( 'semantic' );
 	wp_enqueue_style( 'lebret' );
 	wp_enqueue_style( 'lebret-color' );
+	wp_enqueue_style( 'dashicons' );
 
 	wp_register_script( 'lebret', get_template_directory_uri() . '/assets/js/public.js', array( 'jquery', 'jquery-masonry' ), false, true );
 	wp_register_script( 'semantic', get_template_directory_uri() . '/assets/js/semantic.js', array( 'jquery' ), false, true );
@@ -98,6 +99,15 @@ function lebret_scripts() {
 add_action( 'wp_enqueue_scripts', 'lebret_scripts' );
 
 
+function lebret_adminbar_style() {
+	if ( is_admin_bar_showing() ) {
+?>
+		<style>#sidebar{margin: 5.75rem 0 0 0 !important;}</style>
+<?php
+	}
+}
+add_action( 'wp_head', 'lebret_adminbar_style' );
+
 /**
  * Load Posts using Ajax
  *
@@ -110,7 +120,15 @@ function lebret_load_posts_callback() {
 	if ( is_null( $offset ) )
 		die( __( 'Nothing left do show!', 'lebret' ) );
 
-	$query = new WP_Query( 'offset=' . $offset );
+	$query = new WP_Query(
+		array(
+			'ignore_sticky_posts' => true,
+			'post_type' => 'post',
+			'post_status' => 'publish',
+			'offset' => $offset
+		)
+	);
+	echo '<!-- '.print_r( $query, true ).' -->';
 	if ( $query->have_posts() ) :
 		while ( $query->have_posts() ) :
 			$query->the_post();
@@ -219,6 +237,33 @@ function lebret_menu( $menu_name = 'primary', $args = array() ) {
 						</nav>
 <?php
 		}
+	}
+}
+
+/**
+ * Display a message to notify readers the current post is more than a year
+ * old and its content may not be relevant anymore.
+ *
+ * @since 1.0.0
+ */
+function lebret_old_posts_notice() {
+	
+	global $post;
+	
+	if ( is_null( $post->post_date ) )
+		return;
+
+	$then = date( 'Ymd', strtotime( $post->post_date ) );
+	$diff = date( 'Ymd' ) - $then;
+	$year = substr( $diff, 0, -4 );
+
+	//if ( strtotime( $post->post_date ) < strtotime('-1 year' ) ) {
+	if ( 0 < $year ) {
+?>
+				<p class="ui secondary inverted black segment">
+					<i class="icon info"></i> <em><?php printf( 'Notice: this post is %s old, its content may be outdated.', sprintf( _n( 'one year', '%d years', $year, 'lebret' ), $year ) ); ?></em>
+				</p>
+<?php
 	}
 }
 

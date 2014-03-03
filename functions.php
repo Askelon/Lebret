@@ -118,7 +118,7 @@ function lebret_load_posts_callback() {
 	$offset = ( isset( $_POST['offset'] ) && '' != $_POST['offset'] ? (int) $_POST['offset'] : null );
 
 	if ( is_null( $offset ) )
-		die( __( 'Nothing left do show!', 'lebret' ) );
+		die( __( 'Nothing left to show!', 'lebret' ) );
 
 	$query = new WP_Query(
 		array(
@@ -128,7 +128,7 @@ function lebret_load_posts_callback() {
 			'offset' => $offset
 		)
 	);
-	echo '<!-- '.print_r( $query, true ).' -->';
+
 	if ( $query->have_posts() ) :
 		while ( $query->have_posts() ) :
 			$query->the_post();
